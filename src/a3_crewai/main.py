@@ -1,66 +1,33 @@
-#!/usr/bin/env python
 import sys
-import warnings
-
-from datetime import datetime
-
-from a3_crewai.crew import A3Crewai
-
-warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
-
-# This main file is intended to be a way for you to run your
-# crew locally, so refrain from adding unnecessary logic into this file.
-# Replace with inputs you want to test with, it will automatically
-# interpolate any tasks and agents information
+import yaml
+from a3_crewai.crew import GameBuilderCrew
 
 def run():
-    """
-    Run the crew.
-    """
+    print("## Welcome to the Game Crew")
+    print('-------------------------------')
+
+    # Load game design instructions from gamedesign.yaml
+    with open('src/a3_crewai/config/gamedesign.yaml', 'r', encoding='utf-8') as file:
+        gamedesign = yaml.safe_load(file)
+
+    # Load the game template from the templates folder
+    with open('src/a3_crewai/config/gametemplate.html', 'r', encoding='utf-8') as template_file:
+        template = template_file.read()
+
+    # Prepare inputs using {game} and {template}
     inputs = {
-        'topic': 'AI LLMs',
-        'current_year': str(datetime.now().year)
+        'game': gamedesign['bank_heist'],  # Generic instructions for a stealth and card-based game
+        'template': template
     }
-    
-    try:
-        A3Crewai().crew().kickoff(inputs=inputs)
-    except Exception as e:
-        raise Exception(f"An error occurred while running the crew: {e}")
 
+    # Kick off the Crew pipeline, chaining outputs from each task
+    final_game_code = GameBuilderCrew().crew().kickoff(inputs=inputs)
 
-def train():
-    """
-    Train the crew for a given number of iterations.
-    """
-    inputs = {
-        "topic": "AI LLMs"
-    }
-    try:
-        A3Crewai().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
+    print("\n\n########################")
+    print("## Here is the result")
+    print("########################\n")
+    print("Final HTML code for the game:")
+    print(final_game_code)
 
-    except Exception as e:
-        raise Exception(f"An error occurred while training the crew: {e}")
-
-def replay():
-    """
-    Replay the crew execution from a specific task.
-    """
-    try:
-        A3Crewai().crew().replay(task_id=sys.argv[1])
-
-    except Exception as e:
-        raise Exception(f"An error occurred while replaying the crew: {e}")
-
-def test():
-    """
-    Test the crew execution and returns the results.
-    """
-    inputs = {
-        "topic": "AI LLMs",
-        "current_year": str(datetime.now().year)
-    }
-    try:
-        A3Crewai().crew().test(n_iterations=int(sys.argv[1]), openai_model_name=sys.argv[2], inputs=inputs)
-
-    except Exception as e:
-        raise Exception(f"An error occurred while testing the crew: {e}")
+if __name__ == "__main__":
+    run()

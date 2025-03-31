@@ -1,62 +1,116 @@
+from typing import List
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 
-# If you want to run a snippet of code before or after the crew starts,
-# you can use the @before_kickoff and @after_kickoff decorators
-# https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
-
 @CrewBase
-class A3Crewai():
-    """A3Crewai crew"""
-
-    # Learn more about YAML configuration files here:
-    # Agents: https://docs.crewai.com/concepts/agents#yaml-configuration-recommended
-    # Tasks: https://docs.crewai.com/concepts/tasks#yaml-configuration-recommended
+class GameBuilderCrew:
+    """
+    GameBuilderCrew for generating a generic stealth and card-based game using a provided template.
+    
+    Pipeline:
+      1. ui_css_generation: Generate HTML/CSS code for the game interface.
+      2. game_logic_generation: Generate core game mechanics (grid layout, entity placement, movement functions).
+      3. user_input_generation: Generate code to capture and process user inputs.
+      4. template_integration: Integrate the generated code segments into the provided template {template}.
+      5. testing_and_debugging: Review and optimize the integrated code.
+      6. final_output: Save the final code to outputs/game.html.
+    """
     agents_config = 'config/agents.yaml'
     tasks_config = 'config/tasks.yaml'
 
-    # If you would like to add tools to your agents, you can learn more about it here:
-    # https://docs.crewai.com/concepts/agents#agent-tools
     @agent
-    def researcher(self) -> Agent:
+    def ui_css_agent(self) -> Agent:
         return Agent(
-            config=self.agents_config['researcher'],
+            config=self.agents_config['ui_css_agent'],
+            allow_delegation=False,
             verbose=True
         )
 
     @agent
-    def reporting_analyst(self) -> Agent:
+    def game_logic_agent(self) -> Agent:
         return Agent(
-            config=self.agents_config['reporting_analyst'],
+            config=self.agents_config['game_logic_agent'],
+            allow_delegation=False,
             verbose=True
         )
 
-    # To learn more about structured task outputs,
-    # task dependencies, and task callbacks, check out the documentation:
-    # https://docs.crewai.com/concepts/tasks#overview-of-a-task
-    @task
-    def research_task(self) -> Task:
-        return Task(
-            config=self.tasks_config['research_task'],
+    @agent
+    def user_input_agent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['user_input_agent'],
+            allow_delegation=False,
+            verbose=True
+        )
+
+    @agent
+    def integrator_agent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['integrator_agent'],
+            allow_delegation=False,
+            verbose=True
+        )
+
+    @agent
+    def reviewer_agent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['reviewer_agent'],
+            allow_delegation=True,
+            verbose=True
         )
 
     @task
-    def reporting_task(self) -> Task:
+    def ui_css_generation(self) -> Task:
         return Task(
-            config=self.tasks_config['reporting_task'],
-            output_file='report.md'
+            config=self.tasks_config['ui_css_generation'],
+            agent=self.ui_css_agent()
+        )
+
+    @task
+    def game_logic_generation(self) -> Task:
+        return Task(
+            config=self.tasks_config['game_logic_generation'],
+            agent=self.game_logic_agent()
+        )
+
+    @task
+    def user_input_generation(self) -> Task:
+        return Task(
+            config=self.tasks_config['user_input_generation'],
+            agent=self.user_input_agent()
+        )
+
+    @task
+    def template_integration(self) -> Task:
+        return Task(
+            config=self.tasks_config['template_integration'],
+            agent=self.integrator_agent()
+        )
+
+    @task
+    def testing_and_debugging(self) -> Task:
+        return Task(
+            config=self.tasks_config['testing_and_debugging'],
+            agent=self.reviewer_agent()
+        )
+
+    @task
+    def final_output(self) -> Task:
+        return Task(
+            config=self.tasks_config['final_output'],
+            agent=self.reviewer_agent()
         )
 
     @crew
     def crew(self) -> Crew:
-        """Creates the A3Crewai crew"""
-        # To learn how to add knowledge sources to your crew, check out the documentation:
-        # https://docs.crewai.com/concepts/knowledge#what-is-knowledge
-
+        """
+        Orchestrates the pipeline sequentially.
+        The outputs flow from:
+        ui_css_generation -> game_logic_generation -> user_input_generation ->
+        template_integration -> testing_and_debugging -> final_output.
+        """
         return Crew(
-            agents=self.agents, # Automatically created by the @agent decorator
-            tasks=self.tasks, # Automatically created by the @task decorator
+            agents=self.agents,
+            tasks=self.tasks,
             process=Process.sequential,
             verbose=True,
-            # process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
         )

@@ -1,0 +1,94 @@
+bank_heist: >
+  """
+  Game Overview:
+
+  "The Bank Heist - Cards Edition" is a hybrid stealth-action and strategic card-based HTML5 game set on an 80x80 grid. In this game, players execute a high-stakes bank heist by combining dynamic stealth gameplay with the tactical use of special action cards—DASH, STEALTH, and DISABLE—to outsmart guards and security systems.
+
+  Core Game Elements:
+
+    Grid-Based Layout:
+        - The game is played on a 50x50 grid representing the bank’s layout. Some cells are blocked or are walls, through which the player can't move. 
+        - Make sure you create some obstacles like thuis to make it more challenging. Walls and fixed obstacles block movement.
+        - One cell has the vault, at which the player should collect the key.
+        - Once the key is collected, the player should move to the exit cell inorder to escape.
+
+    Player Movement:
+        - Players control their character using arrow keys on desktop and swipe gestures on mobile.
+        - Movement is smooth and continuous:
+            • The player collides with walls and cannot pass through them.
+            • Doors allow fluid transitions between rooms, ensuring a seamless gameplay experience.
+        - The movement system is designed to be responsive and intuitive, providing a freestyle navigation experience.
+
+    Special Cards:
+        - The game features a dynamic card deck with three visible cards at all times:
+            • DASH Card: Grants accelerated movement in a selected direction for a short burst, helping the player quickly evade threats.
+            • STEALTH Card: Temporarily renders the player undetectable by guards, without affecting movement or collisions.
+            • DISABLE Card: Temporarily freezes guard movements, providing a window of opportunity for safe passage.
+        - Once a card is used, it is immediately replaced by a new random card from the deck, ensuring continuous strategic options.
+
+    Guard AI and Patrol Logic:
+        - Guards patrol the bank along predefined, randomized paths through doors connecting various rooms.
+            • They navigate smoothly and avoid collisions with walls.
+            • The moveGuards() function is optimized for realistic, continuous patrol routes.
+        - Guards detect players within a visible radar range:
+            • If a guard detects the player (and the player is not under the effect of the STEALTH Card), the game triggers a game-over state.
+            • Detection is based on proximity and line-of-sight within the patrol area.
+
+    Vault and Exit Logic:
+        - A special "vault" room, marked by distinctive gold visuals, houses a key that the player must collect.
+        - The exit room remains locked until the key is obtained, adding a crucial objective and extra layer of challenge to the heist.
+
+    User Interface & Mobile Compatibility:
+        - The game should be in left and the cards should be displayed to the right.
+        - Make it clean, appealing and futuristic. It should look like a bank blueprint from bird's eye.
+        - The player and the guard should be displayed as some images player.png and guard.png
+        - The UI is fully responsive and optimized for all devices:
+            • Mobile version optimized for a 9:16 aspect ratio.
+            • Tablet version optimized for a 3:4 aspect ratio.
+            • A universal desktop version ensures proper scaling across all screen sizes.
+        - Visually engaging splash screens are designed for the game start, tailored individually for mobile, tablet, and desktop.
+        - Touch controls for card activation and player movement are seamlessly integrated alongside keyboard inputs, ensuring an intuitive user experience.
+
+    Real-Time Dynamic Events:
+        - Random, real-time events keep gameplay unpredictable:
+            • Events such as alarms, security camera activations, and unexpected lockdowns are triggered randomly or by specific player actions.
+            • These dynamic events temporarily alter gameplay, increasing tension and challenge.
+
+    Progressive Difficulty and Reward System:
+        - The game features progressive difficulty:
+            • As levels advance, maps become more complex, AI guards grow smarter, and resources become scarcer.
+        - A reward system offers achievement badges and unlockable cosmetic or gameplay enhancements based on player performance.
+
+    Customizable Card Decks:
+        - Players can customize and upgrade their card decks between heists:
+            • This feature deepens the strategic element of the game, allowing for personalized play styles.
+            • Rare or specialized cards can be unlocked through achievements, adding further depth to the deck-building aspect.
+
+  Game Genre Selection:
+    - The game is a hybrid that combines stealth action with card-based strategic decision-making.
+    - It blends a bank heist theme with a dynamic deck of special cards to outsmart security systems.
+
+  How to Play:
+    Objective:
+      - Infiltrate a high-security vault and reach the exit while avoiding detection by guards.
+    Movement:
+      - Use the arrow keys (or swipe gestures on mobile) to navigate your character through the bank layout and across interconnected rooms.
+    Special Cards:
+      - DASH: Click to activate dash mode and then press an arrow key to quickly move in that direction for a few seconds.
+      - STEALTH: Click to remain in your current cell and become hidden for a few seconds—even if guards pass by.
+      - DISABLE: Click to temporarily freeze guard movements for a few seconds.
+      - Each used card is immediately replaced with a new randomly generated card, so players must use their cards strategically.
+    Winning & Losing:
+      - Reach the exit cell to win the game.
+      - If a guard detects you (visualized by a red radar circle) while you are not hidden by STEALTH, the game ends.
+
+  
+  
+  Novel Features and Mechanics:
+    - Hybrid Gameplay: Seamlessly combines real-time stealth action with card-based strategy, creating unique and dynamic playthroughs.
+    - Dynamic Guard AI: Guards patrol randomly through rooms and doorways, ensuring that each heist presents new challenges.
+    - Adaptive Special Card Deck: The card deck updates dynamically after each use, requiring players to adapt their strategies on the fly.
+    - Multiple Randomized Maps: Various map layouts are randomly selected at the start of each session, providing fresh challenges every time.
+    - Enhanced Mobile Compatibility: Optimized touch controls and a responsive design ensure smooth gameplay across mobile, tablet, and desktop devices.
+    - Immersive Audio-Visuals: High-quality sound effects and visuals enhance the intensity and immersion of the heist.
+  """
