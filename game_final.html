@@ -1,0 +1,252 @@
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    
+      class GameUI {
+        constructor() {
+          this.startMenuScreen = document.getElementById('start-menu-screen');
+          this.settingsScreen = document.getElementById('settings-screen');
+          this.instructionsScreen = document.getElementById('instructions-screen');
+          this.gameContainer = document.getElementById('game-screen');
+          this.gameOverScreen = document.getElementById('game-over-screen');
+          this.gameControls = document.getElementById('game-controls');
+          this.hud = document.getElementById('hud');
+        };
+    
+        swapToScreen(screen) {
+          this.startMenuScreen.classList.remove('active');
+          this.settingsScreen.classList.remove('active');
+          this.instructionsScreen.classList.remove('active');
+          this.gameContainer.classList.remove('active');
+          this.gameOverScreen.classList.remove('active');
+          screen.classList.add('active');
+    
+          if (screen.id === 'game-screen') {
+            this.hud.style.display = 'block';
+            this.gameControls.style.display = 'block';
+          } else {
+            this.hud.style.display = 'none';
+            this.gameControls.style.display = 'none';
+          }
+        };
+    
+        startGame() {
+          const startGameSound = document.getElementById('start-game-sound');
+          this.swapToScreen(this.gameContainer);
+          startGameSound.play();
+        };
+    
+        endGame() {
+          const endGameSound = document.getElementById('game-over-sound');
+          endGameSound.play();
+          this.swapToScreen(this.gameOverScreen);
+        };
+    
+        mainMenu() {
+          this.swapToScreen(this.startMenuScreen);
+        };
+    
+        playAgain() {
+          this.swapToScreen(this.gameContainer);
+        };
+    
+        settings() {
+          this.swapToScreen(this.settingsScreen);
+        };
+    
+        instructions() {
+          this.swapToScreen(this.instructionsScreen);
+        };
+      }
+    
+      class GameLogic {
+        constructor() {
+          this.canvas = document.getElementById('gameCanvas');
+          this.context = this.canvas.getContext('2d');
+          this.player = { x: 0, y: 0, width: 10, height: 10, speed: 1, activeCard: null };
+          this.guards = [];
+          this.gridSize = 80;
+          this.specialCards = {
+            DASH: { active: false, duration: 10000 },
+            STEALTH: { active: false, duration: 10000 },
+            DISABLE: { active: false, duration: 10000 }
+          };
+          this.keyCollected = false;
+          this.exitActivated = false;
+          this.init();
+        }
+    
+        init() {
+          this.canvas.width = this.gridSize * 10;
+          this.canvas.height = this.gridSize * 10;
+          this.generateMap();
+          this.registerInputHandlers();
+          requestAnimationFrame(this.gameLoop.bind(this));
+        }
+    
+        generateMap() {
+          // You can fill this later
+        }
+    
+        registerInputHandlers() {
+          window.addEventListener('keydown', (event) => {
+            switch (event.key) {
+              case 'ArrowUp':
+              case 'w':
+                this.movePlayer(0, -1);
+                break;
+              case 'ArrowDown':
+              case 's':
+                this.movePlayer(0, 1);
+                break;
+              case 'ArrowLeft':
+              case 'a':
+                this.movePlayer(-1, 0);
+                break;
+              case 'ArrowRight':
+              case 'd':
+                this.movePlayer(1, 0);
+                break;
+              default:
+                break;
+            }
+          });
+        }
+    
+        movePlayer(dx, dy) {
+          if (this.specialCards.DASH.active) {
+            dx *= 2;
+            dy *= 2;
+          }
+          this.player.x += dx * this.player.speed;
+          this.player.y += dy * this.player.speed;
+          this.checkWinCondition();
+          this.checkCollisionWithGuards();
+        }
+    
+        checkWinCondition() {
+          if (this.keyCollected && this.playerReachesExit()) {
+            this.winGame();
+          }
+        }
+    
+        winGame() {
+          console.log('You won!');
+          const victorySound = document.getElementById('victory-sound');
+          victorySound.play();
+        }
+    
+        playerReachesExit() {
+          return false;
+        }
+    
+        checkCollisionWithGuards() {
+          if (!this.specialCards.STEALTH.active) {
+            this.guards.forEach((guard) => {
+              if (this.checkOverlap(guard, this.player)) {
+                this.loseGame();
+              }
+            });
+          }
+        }
+    
+        loseGame() {
+          console.log('Caught!');
+          const gameOverSound = document.getElementById('game-over-sound');
+          gameOverSound.play();
+        }
+    
+        checkOverlap(entity1, entity2) {
+          return (entity1.x < entity2.x + entity2.width &&
+                  entity1.x + entity1.width > entity2.x &&
+                  entity1.y < entity2.y + entity2.height &&
+                  entity1.y + entity1.height > entity2.y);
+        }
+    
+        activateCard(cardType) {
+          if (this.specialCards[cardType]) {
+            this.specialCards[cardType].active = true;
+            setTimeout(() => {
+              this.specialCards[cardType].active = false;
+            }, this.specialCards[cardType].duration);
+    
+            const soundMap = {
+              'DASH': 'dash-sound',
+              'STEALTH': 'stealth-sound',
+              'DISABLE': 'disable-sound'
+            };
+            const soundElement = document.getElementById(soundMap[cardType]);
+            if (soundElement) soundElement.play();
+          }
+        }
+    
+        gameLoop() {
+          this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+          this.draw();
+          requestAnimationFrame(this.gameLoop.bind(this));
+        }
+    
+        draw() {
+          this.context.fillStyle = "#fff";
+          this.context.fillRect(this.player.x, this.player.y, this.player.width, this.player.height);
+        }
+      }
+    
+      // ADDING THIS CLASS: Game controller that ties UI and Logic together
+      class Game {
+        constructor() {
+          this.ui = new GameUI();
+          this.logic = new GameLogic();
+          this.setupButtonHandlers();
+        }
+    
+        setupButtonHandlers() {
+          document.getElementById('play-button').addEventListener('click', () => {
+            this.ui.startGame();
+          });
+    
+          document.getElementById('settings-button').addEventListener('click', () => {
+            this.ui.settings();
+          });
+    
+          document.getElementById('instructions-button').addEventListener('click', () => {
+            this.ui.instructions();
+          });
+    
+          document.getElementById('settings-back-button').addEventListener('click', () => {
+            this.ui.mainMenu();
+          });
+    
+          document.getElementById('instructions-back-button').addEventListener('click', () => {
+            this.ui.mainMenu();
+          });
+    
+          document.getElementById('play-again-button').addEventListener('click', () => {
+            this.ui.playAgain();
+          });
+    
+          document.getElementById('main-menu-button').addEventListener('click', () => {
+            this.ui.mainMenu();
+          });
+    
+          document.getElementById('game-menu-button').addEventListener('click', () => {
+            this.ui.mainMenu();
+          });
+    
+          document.getElementById('game-restart-button').addEventListener('click', () => {
+            this.ui.startGame();
+          });
+    
+          document.getElementById('game-instructions-button').addEventListener('click', () => {
+            this.ui.instructions();
+          });
+        }
+      }
+    
+      function activateCard(cardName) {
+        game.logic.activateCard(cardName);
+      }
+    
+      const game = new Game();
+    });
+    </script>
+    

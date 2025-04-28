@@ -1,94 +1,144 @@
-bank_heist: >
-  """
-  Game Overview:
+bank_heist:
+  game_overview: >
+    """
+    Game Overview:
 
-  "The Bank Heist - Cards Edition" is a hybrid stealth-action and strategic card-based HTML5 game set on an 80x80 grid. In this game, players execute a high-stakes bank heist by combining dynamic stealth gameplay with the tactical use of special action cards—DASH, STEALTH, and DISABLE—to outsmart guards and security systems.
+    "The Bank Heist - Cards Edition" is a hybrid stealth-action and strategic card-based HTML5 game played on a dynamic 80x80 grid. 
+    Players must successfully complete a high-stakes bank heist by combining precise stealth movement with the tactical usage of special action cards—DASH, STEALTH, and DISABLE—to outsmart patrolling guards and bypass security. The game should be placed within the game canvas, shouldn't overflow and should be mobile friendly. SO adjust the size accordingly and responsively.
 
-  Core Game Elements:
+    Core Game Elements:
 
-    Grid-Based Layout:
-        - The game is played on a 50x50 grid representing the bank’s layout. Some cells are blocked or are walls, through which the player can't move. 
-        - Make sure you create some obstacles like thuis to make it more challenging. Walls and fixed obstacles block movement.
-        - One cell has the vault, at which the player should collect the key.
-        - Once the key is collected, the player should move to the exit cell inorder to escape.
+        Grid-Based Layout:
+        - The game is played on a detailed 80x80 grid representing the bank floor.
+        - Some cells are walls or obstacles where the player and guards cannot move.
+        - Vault and Exit cells are marked distinctly on the grid.
+        - Gridlines are subtly visible to help players visualize movement.
+        - Randomized walls and map layouts across different runs for replayability.
 
-    Player Movement:
-        - Players control their character using arrow keys on desktop and swipe gestures on mobile.
-        - Movement is smooth and continuous:
-            • The player collides with walls and cannot pass through them.
-            • Doors allow fluid transitions between rooms, ensuring a seamless gameplay experience.
-        - The movement system is designed to be responsive and intuitive, providing a freestyle navigation experience.
+        Player Character:
+        - A top-down view stealth agent.
+        - Movement: Controlled via Arrow keys/WASD (desktop) or swipe gestures (mobile).
+        - Speed: Base movement speed of 1 unit; doubles with the DASH card.
+        - Powers: DASH, STEALTH, and DISABLE, each activated through cards.
+        - Objective: Navigate, retrieve the Vault Key, and reach the Exit undetected.
 
-    Special Cards:
-        - The game features a dynamic card deck with three visible cards at all times:
-            • DASH Card: Grants accelerated movement in a selected direction for a short burst, helping the player quickly evade threats.
-            • STEALTH Card: Temporarily renders the player undetectable by guards, without affecting movement or collisions.
-            • DISABLE Card: Temporarily freezes guard movements, providing a window of opportunity for safe passage.
-        - Once a card is used, it is immediately replaced by a new random card from the deck, ensuring continuous strategic options.
+        Guards (AI Enemies):
+        - Patrol predefined routes, moving door-to-door inside the bank.
+        - Detection Radius: 40px circular area around each guard.
+        - Patrol Behavior: Move along doorways, pause briefly, reverse routes dynamically.
+        - Guard States:
+            - Normal: Patrols and detects the player.
+            - Frozen: Disabled temporarily when DISABLE card is used.
+            - Blind: Cannot detect the player during STEALTH activation.
 
-    Guard AI and Patrol Logic:
-        - Guards patrol the bank along predefined, randomized paths through doors connecting various rooms.
-            • They navigate smoothly and avoid collisions with walls.
-            • The moveGuards() function is optimized for realistic, continuous patrol routes.
-        - Guards detect players within a visible radar range:
-            • If a guard detects the player (and the player is not under the effect of the STEALTH Card), the game triggers a game-over state.
-            • Detection is based on proximity and line-of-sight within the patrol area.
+        Special Cards (Power Cards):
+        - Each card is a consumable special power with a limited duration (10 seconds). Show the timer also.
+        - DASH:
+            - Doubles the player’s movement speed. 2 steps at a time in the direction selected after clicking on dash card
+            - Best used for quick dashes across open spaces.
+        - STEALTH:
+            - Makes the player invisible to guards.
+            - Allows movement even through detection zones.
+        - DISABLE:
+            - Freezes all guards in place.
+            - Best used to bypass tight guard patrols.
+        - Card Usage Mechanics:
+            - Players have a hand of 3 cards visible at all times.
+            - Clicking/tapping a card activates the corresponding power.
+            - Used cards are immediately replaced by drawing from the deck.
+            - Deck size is initially 10 cards, randomly generated at game start.
 
-    Vault and Exit Logic:
-        - A special "vault" room, marked by distinctive gold visuals, houses a key that the player must collect.
-        - The exit room remains locked until the key is obtained, adding a crucial objective and extra layer of challenge to the heist.
+        UI and Screens:
+        - Start Menu Screen:
+            - "Play", "Settings", and "Instructions" buttons.
+        - Settings Screen:
+            - Placeholder for future enhancements (volume, difficulty, skins).
+        - Instructions Screen:
+            - Displays how to move, how to use cards, and game objectives.
+        - Game HUD:
+            - Shows active power and countdown timer.
+            - Play/Restart/Menu buttons always available at the top.
+        - Game Over Screen:
+            - Displays dynamic messages based on Win/Lose.
+            - Options to replay or return to main menu.
+        - Landscape Lock:
+            - Warn mobile players if the device is in portrait mode.
 
-    User Interface & Mobile Compatibility:
-        - The game should be in left and the cards should be displayed to the right.
-        - Make it clean, appealing and futuristic. It should look like a bank blueprint from bird's eye.
-        - The player and the guard should be displayed as some images player.png and guard.png
-        - The UI is fully responsive and optimized for all devices:
-            • Mobile version optimized for a 9:16 aspect ratio.
-            • Tablet version optimized for a 3:4 aspect ratio.
-            • A universal desktop version ensures proper scaling across all screen sizes.
-        - Visually engaging splash screens are designed for the game start, tailored individually for mobile, tablet, and desktop.
-        - Touch controls for card activation and player movement are seamlessly integrated alongside keyboard inputs, ensuring an intuitive user experience.
+        Sound and Music:
+        - Background heist-themed ambient music looped during gameplay.
+        - Separate SFX for:
+            - Game start
+            - Game over
+            - Card activation (future addition)
 
-    Real-Time Dynamic Events:
-        - Random, real-time events keep gameplay unpredictable:
-            • Events such as alarms, security camera activations, and unexpected lockdowns are triggered randomly or by specific player actions.
-            • These dynamic events temporarily alter gameplay, increasing tension and challenge.
+        Game Progression:
+        - Player starts at a randomized entrance point.
+        - Vault key must be collected first to unlock exit access.
+        - Upon key collection:
+            - Vault disappears.
+            - Exit is activated.
+        - Player must reach the exit without getting caught to win.
 
-    Progressive Difficulty and Reward System:
-        - The game features progressive difficulty:
-            • As levels advance, maps become more complex, AI guards grow smarter, and resources become scarcer.
-        - A reward system offers achievement badges and unlockable cosmetic or gameplay enhancements based on player performance.
+        Victory Condition:
+        - Successfully reach the exit after collecting the vault key.
+        - Avoid detection throughout.
 
-    Customizable Card Decks:
-        - Players can customize and upgrade their card decks between heists:
-            • This feature deepens the strategic element of the game, allowing for personalized play styles.
-            • Rare or specialized cards can be unlocked through achievements, adding further depth to the deck-building aspect.
+        Defeat Condition:
+        - Player detected inside any guard’s detection radius without active STEALTH.
+        - Instant transition to Game Over.
 
-  Game Genre Selection:
-    - The game is a hybrid that combines stealth action with card-based strategic decision-making.
-    - It blends a bank heist theme with a dynamic deck of special cards to outsmart security systems.
+        Technical Highlights:
+        - HTML5 Canvas based rendering.
+        - JavaScript classes for UI management, game logic, input handling.
+        - Responsive CSS for desktop and mobile compatibility.
+        - Smooth animations via requestAnimationFrame.
+        - Modular asset management for images (cards, guards, vault, background) and audio.
 
-  How to Play:
-    Objective:
-      - Infiltrate a high-security vault and reach the exit while avoiding detection by guards.
-    Movement:
-      - Use the arrow keys (or swipe gestures on mobile) to navigate your character through the bank layout and across interconnected rooms.
-    Special Cards:
-      - DASH: Click to activate dash mode and then press an arrow key to quickly move in that direction for a few seconds.
-      - STEALTH: Click to remain in your current cell and become hidden for a few seconds—even if guards pass by.
-      - DISABLE: Click to temporarily freeze guard movements for a few seconds.
-      - Each used card is immediately replaced with a new randomly generated card, so players must use their cards strategically.
-    Winning & Losing:
-      - Reach the exit cell to win the game.
-      - If a guard detects you (visualized by a red radar circle) while you are not hidden by STEALTH, the game ends.
+    """
+  assets:
+    - filename: "logo.png"
+      prompt: "A sleek futuristic neon logo for a bank heist game, featuring glowing blue, cyan, and purple hues, styled in Orbitron font. Cyberpunk aesthetic with subtle glitch and holographic effects."
 
-  
-  
-  Novel Features and Mechanics:
-    - Hybrid Gameplay: Seamlessly combines real-time stealth action with card-based strategy, creating unique and dynamic playthroughs.
-    - Dynamic Guard AI: Guards patrol randomly through rooms and doorways, ensuring that each heist presents new challenges.
-    - Adaptive Special Card Deck: The card deck updates dynamically after each use, requiring players to adapt their strategies on the fly.
-    - Multiple Randomized Maps: Various map layouts are randomly selected at the start of each session, providing fresh challenges every time.
-    - Enhanced Mobile Compatibility: Optimized touch controls and a responsive design ensure smooth gameplay across mobile, tablet, and desktop devices.
-    - Immersive Audio-Visuals: High-quality sound effects and visuals enhance the intensity and immersion of the heist.
-  """
+    - filename: "player.png"
+      prompt: "Pixel-art style top-down view of a stealthy futuristic thief wearing a slim black nano-fiber stealth suit with a glowing visor, carrying a compact hacking device, ready for a high-tech bank heist. Only the face to be used as thumbnail."
+
+    - filename: "guard.png"
+      prompt: "Pixel-art style top-down view of a futuristic bank security guard in heavy-duty blue armor with a neon-lit helmet and patrolling flashlight. Industrial sci-fi aesthetic, serious and alert. Only the face to be used as thumbnail."
+
+    - filename: "background.png"
+      prompt: "High-tech blueprint- grid style map of a futuristic cyberpunk bank, showing multiple interconnected rooms, steel vaults, laser-secured corridors, and rotating security cameras. Rendered in glowing blue neon on a dark background."
+
+    - filename: "card_dash.png"
+      prompt: "Futuristic card design labeled 'DASH' showing a cybernetic thief sprinting at hyper-speed, trailing glowing blue energy lines, set against a dark holographic background."
+
+    - filename: "card_stealth.png"
+      prompt: "Futuristic card design labeled 'STEALTH' featuring a semi-invisible figure activating a cloaking device, fading into a dark alley with purple and black stealth energy effects."
+
+    - filename: "card_disable.png"
+      prompt: "Futuristic card design labeled 'DISABLE' showing an electrified EMP burst disabling a camera system and alarm grid. Red glitch effects and broken neon warning symbols in background."
+
+    - filename: "victory.png"
+      prompt: "Victory screen with bold green neon text 'HEIST SUCCESSFUL!' shimmering against a cyberpunk skyline at night, lit by distant neon advertisements and drones flying past."
+
+    - filename: "game_over.png"
+      prompt: "Game Over screen with intense red neon text 'CAUGHT! GAME OVER' flashing on a glitching high-tech control room background, filled with broken screens and red alarms."
+
+  sounds:
+    - filename: "bg_loop.mp3"
+      query: "futuristic stealth heist ambient music, deep electronic pulses, suspenseful tension, cyberpunk atmosphere"
+
+    - filename: "dash.mp3"
+      query: "high-tech dash sound effect, rapid acceleration whoosh with sci-fi metallic undertones"
+
+    - filename: "stealth.mp3"
+      query: "sci-fi stealth cloak activation, soft distortion hum with fading electronic shimmer"
+
+    - filename: "disable.mp3"
+      query: "electric surge zap sound, short circuit effect, EMP blast disabling devices"
+
+    - filename: "victory.mp3"
+      query: "victorious heist success music, short rising fanfare with futuristic synth and echo"
+
+    - filename: "game_over.mp3"
+      query: "dramatic stealth failure tone, dark synth drop followed by glitch and alarm siren"
+
