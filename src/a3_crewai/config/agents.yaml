@@ -2,7 +2,7 @@ ui_css_agent:
   role: "UI/CSS Developer"
   goal: "Create responsive HTML structure and CSS styles for stealth and card-based games."
   backstory: "You specialize in designing game UIs that fit templates and scale properly across desktop, mobile, and tablet devices."
-  model: "gpt-4o"
+  model: "gpt-o3-mini"
   prompt: >
     Use the game description provided in {input_path} and the template structure in {template_path}.
     Generate the necessary HTML structure (canvas + card panel) and write responsive CSS styles.
@@ -16,7 +16,7 @@ game_logic_agent:
   role: "Game Logic Developer"
   goal: "Generate JavaScript code that handles the main gameplay logic inside a GameLogic class."
   backstory: "You are an expert at designing modular, scalable game logic for stealth and card-based games."
-  model: "gpt-4o"
+  model: "gpt-o3-mini"
   prompt: >
     Following {input_path} gameplay rules and {template_path} structure,
     generate a full GameLogic class that:
@@ -33,7 +33,7 @@ user_input_agent:
   role: "Input Handler Developer"
   goal: "Create JavaScript code that processes keyboard and swipe input events."
   backstory: "You are skilled in building mobile/desktop friendly input handlers for interactive games."
-  model: "gpt-4o"
+  model: "gpt-o3-mini"
   prompt: >
     Read the {input_path} for controls.
     Generate JavaScript code that:
@@ -49,7 +49,7 @@ image_assets_agent:
   role: "Image Assets Generation Agent"
   goal: "Generate image URLs using DALL-E and prepare a batch list."
   backstory: "Creative artist skilled in automated asset generation."
-  model: "gpt-4o"
+  model: "gpt-o3-mini"
   prompt: >
     import yaml
     import json
@@ -95,7 +95,7 @@ audio_assets_agent:
   role: "Audio Assets Generation Agent"
   goal: "Automatically download all required audio files from Freesound into output/sounds/."
   backstory: "An expert sound engineer fetching perfect futuristic sounds for a stealth heist game."
-  model: "gpt-4o"
+  model: "gpt-o3-mini"
   prompt: |
     You are tasked with gathering audio assets needed for a stealth-based heist game.
     1. For each audio description provided (e.g., 'footsteps', 'vault opening', 'laser trap sound'), search Freesound.org.
@@ -113,7 +113,7 @@ asset_integrator_agent:
   role: "Asset Integration Agent"
   goal: "Embed images & audio into your HTML/CSS/JS using the FileWriterTool."
   backstory: "Developer automating asset wiring."
-  model: "gpt-4o"
+  model: "gpt-o3-mini"
   prompt: >
     Read `images/manifest.json` and `sounds/manifest.json`, then inject tags into the final output html code which is according to the {template_path} and save via FileWriterTool:
     ```python
@@ -143,38 +143,20 @@ template_integrator_agent:
   role: "Template Integrator & Final Packager"
   goal: "Integrate all developed components into one cohesive, deployable HTML file with embedded CSS and JavaScript."
   backstory: "Expert in consolidating diverse codebases into a unified, self-contained product that is easy to deploy."
-  model: "gpt-4o"
+  model: "gpt-o3-mini"
   enhanced_prompt: >
-    Combine the outputs from all agents into a single, complete HTML file titled "Resign and Reborn."
+    Combine the outputs from all agents into a single, complete HTML file titled "Bank Heist"
     The file must include embedded CSS and JavaScript, load Phaser.js from a CDN, and function as a fully integrated HTML5 game.
     Use FileWriterTool to scaffold and copy into `output/`:
-    ```python
-    from crewai_tools import FileWriterTool
-    import os
-    file_writer = FileWriterTool()
-
-    # Copy HTML
-    html = open("index.html").read()
-    file_writer._run("game.html", html, "output")
-
-    # Copy images
-    for f in os.listdir("images"):
-      data = open(os.path.join("images", f), "rb").read()
-      file_writer._run(f, data, "output/images")
-
-    # Copy sounds
-    for f in os.listdir("sounds"):
-      data = open(os.path.join("sounds", f), "rb").read()
-      file_writer._run(f, data, "output/sounds")
-
-    # Print structure
-    def walk(d, p=""):
-      for n in sorted(os.listdir(d)):
-        full = os.path.join(d, n)
-        print(p + ("📁 " if os.path.isdir(full) else "📄 ") + n)
-        if os.path.isdir(full): walk(full, p+"  ")
-    print("📁 output"); walk("output", "  ")
-    ```
+     You are provided with three code segments:
+       - "UI/CSS Code Segment" from the UI/CSS Developer.
+       - "JavaScript Code Segment" from the Game Logic Developer.
+       - "User Input Code Segment" from the User Input Developer.
+     You are also given a base HTML template stored in {template_path} that contains the following placeholders:
+       - [[UI_CSS]]: to be replaced with the "UI/CSS Code Segment".
+       - [[JS_CODE]]: to be replaced with the "JavaScript Code Segment" and "User Input Code Segment".
+     Replace only these placeholders with the corresponding code segments, preserving all other static content of the template.
+    Integrate all the image and audio files also <img> and <audio> tags.
   settings:
     temperature: 0.0
 
@@ -182,14 +164,14 @@ final_html_builder_agent:
   role: "Final HTML Builder"
   goal: "Merge UI, Game Logic, Input, and Asset Tags into a complete playable HTML file."
   backstory: "You specialize in combining frontend UI, JavaScript logic, and assets into a final production-ready HTML."
-  model: "gpt-4o"
+  model: "gpt-o3-mini"
   prompt: >
     Read the generated:
     - UI CSS Segment (HTML + CSS)
     - JavaScript Logic Segment (Game Logic)
     - JavaScript Input Segment (User Controls)
     - Asset Tags Segment (Images and Audio)
-    Merge these into the `template.html` by replacing:
+    Merge these into the {template_path} by replacing:
     - [[UI_CSS]] → UI and CSS
     - [[JS_CODE]] → JavaScript Logic + JavaScript Input + Asset Tags
     Save the final complete HTML file as `output/game.html` using FileWriterTool.
@@ -202,7 +184,7 @@ reviewer_agent:
   role: "QA Tester"
   goal: "Validate and debug the integrated game for functionality and responsiveness."
   backstory: "Detail-oriented tester with expertise in web game debugging and performance profiling."
-  model: "gpt-4o"
+  model: "gpt-o3-mini"
   prompt: >
     Load the final HTML in a browser simulation.
     Verify:

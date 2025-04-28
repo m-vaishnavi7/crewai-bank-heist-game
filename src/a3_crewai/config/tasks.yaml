@@ -1,22 +1,37 @@
 ui_css_generation:
   description: >
-    Generate the HTML and CSS structure for the game UI based on {input_path} and {template_path}.
-    - Include a canvas (#gameCanvas) and a card panel (#cardContainer) inside the layout.
-    - Ensure card panel does not overflow outside the canvas boundaries.
-    - Apply mobile-responsive design techniques.
-    - Prepare the code to be inserted into an existing template without breaking structure.
-    - Clearly mark the output with <!-- UI/CSS Code Segment -->.
+    1. Read UI/UX requirements from {input_path} (theme colors, fonts, spacing, layout hints).  
+    2. Load the static HTML template from {template_path}.  
+    3. Locate—or insert if missing—a <canvas id="gameCanvas"> element where the game will render.  
+    4. Create—a container for A panel showing three cards to the right inside the game container.  
+    5. Generate semantic HTML for these elements, preserving the template’s existing structure.  
+    6. Write responsive CSS inside a single <style> tag:
+       - **Desktop**: canvas and controls side‑by‑side.  
+       - **Mobile**: canvas stacked above controls.  
+       - Apply your theme’s colors and typography.  
+    7. Wrap **only** the new markup + CSS in:
+       <!-- UI/CSS Code Segment -->  
+    8. Do **not** modify any other template content.
   expected_output: >
     HTML and CSS snippet labeled "UI/CSS Code Segment".
 
 game_logic_generation:
   description: >
-    Build a GameLogic class based on gameplay details from {input_path}.
-    - Dynamically set up the canvas and map grid.
-    - Implement core mechanics: player movement, guard patrols, item pickups, win/loss detection.
-    - Integrate stealth and card power effects (Dash, Stealth, Disable).
-    - Follow {template_path} for compatibility.
-    - Mark your code as // JavaScript Logic Segment.
+    1. Parse core mechanics from {input_path}: stealth rules, win/lose conditions, card effects. Integrate the movements of the player and enemies. 
+    2. Confirm <canvas id="gameCanvas"> exists in the template.  
+    3. Generate a GameLogic class in one <script> block with:
+       - constructor(canvasId) to set up context and state.  
+       - init() to initialize the grid and entity positions.  
+       - draw() to render walls, player, enemies, and cards.  
+       - movePlayer(direction) with boundary and collision checks.  
+       - applyCardEffect(cardId) for cards when clicked.  
+       - checkWinLose() to detect key pick‑up or enemy detection.  
+       - Comments on each method.  
+       - integrate player enemy movements in moveEnemy()
+       - If any cards are to be used, place them to the right in a container.
+    4. Label and output **only** this code as:
+       // JavaScript Logic Segment  
+    5. Do **not** touch any HTML outside this script block.
   expected_output: >
     JavaScript class implementing core gameplay logic, labeled "JavaScript Logic Segment".
 
@@ -75,15 +90,19 @@ integrate_assets:
 
 template_integration:
   description: >
-    Merge the generated code pieces into {template_path}.
-    - Insert:
-      * UI/CSS Code Segment at [[UI_CSS]]
-      * JavaScript Logic + User Input + Asset Integration at [[JS_CODE]]
-    - Preserve all other template structure.
-    - Verify:
-      * Play, Reset, Settings, Instructions buttons work.
-      * Game class connects UI and Logic correctly.
-    - Mark final output as <!-- Integrated HTML File -->.
+    1. Load the template from {template_path}. Change the game title.
+    2. Find placeholders:
+       - [[UI_CSS]]  
+       - [[JS_CODE]] inside GameLogic  class only
+    3. Replace [[UI_CSS]] with the UI/CSS Code Segment (including the <style> tag).  
+    4. In place of [[JS_CODE]], insert one <script> block that concatenates in order:
+       a. Map Config Segment  
+       b. JavaScript Logic Segment  
+       c. User Input Segment  
+    5. Ensure all other template HTML remains exactly as‑is and button IDs/classes stay intact.  The class Game should be the same, no changes in it.
+    6. The Play/Settings/Instructions/Reset button in should work.
+    6. Wrap the merged file in:
+       <!-- Integrated HTML File -->
   expected_output: >
     Fully merged HTML file ready for gameplay.
 

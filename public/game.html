@@ -133,64 +133,83 @@
         }
         
         /* Your style goes here  */
-    
-      /* Responsive HTML & CSS for "The Bank Heist - Cards Edition" */
-
-      /* Mobile First - Stack Canvas and Controls */
-      #game-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      #gameCanvas {
-        width: 90vw;
-        max-width: 400px;
-        background-color: #0f3460;
-        border: 2px solid #e94560;
-        box-shadow: 0 0 20px rgba(233, 69, 96, 0.5);
-      }
-
-      #uiContainer {
-        display: flex;
-        justify-content: center;
-        margin-top: 10px;
-        width: 100%;
-      }
-
-      #cards {
-        display: flex;
-        justify-content: space-around;
-        width: 90%;
-        max-width: 400px;
-      }
-
-      #cards img {
-        width: 80px;
-        height: 120px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-        transition: transform 0.3s ease;
-        cursor: pointer;
-      }
-
-      #cards img:hover {
-        transform: scale(1.1);
-      }
-
-      @media (min-width: 768px) {
-        /* Desktop - Canvas and Controls Side-by-Side */
-        #game-container {
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: flex-start;
+        #gameCanvasWrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 10px;
+            background-color: #16213e;
+            box-shadow: inset 0 0 10px #0f3460;
+        }
+        
+        #gameCanvas {
+            border: 2px solid #e94560;
+            box-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
+            background-color: #000;
+            width: 80%;
+            height: 80vh;
         }
 
         #uiContainer {
-          max-width: 350px;
-          margin-left: 20px;
+            width: 18%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-      }
-   </style>
+
+        #cards {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .card {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #1a1a2e;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s ease;
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        
+        .card:hover {
+            transform: scale(1.05);
+        }
+        
+        @media (max-width: 600px) {
+            #gameCanvasWrapper {
+                flex-direction: column;
+            }
+
+            #gameCanvas {
+                width: 100%;
+                height: 70vh;
+            }
+
+            #uiContainer {
+                width: 100%;
+                margin-top: 10px;
+                flex-direction: row;
+                justify-content: space-around;
+            }
+
+            .card {
+                width: 30%;
+                margin-bottom: 0;
+                padding: 5px;
+            }
+        }
+        
+        /* End of UI/CSS Code Segment */
+    </style>
   </head>
   <body>
     <div id="game-controls">
@@ -236,18 +255,26 @@
     </div>
 
     <div id="game-screen" class="screen">
-      <div id="game-container">
-         <!-- Insert canvas element for game rendering -->
-         <canvas id="gameCanvas" width="400" height="400"></canvas>
-         <!-- UI Container for cards -->
-         <div id="uiContainer">
-            <div id="cards">
-               <img src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-GYnh8ffasQyyYY4klwAQrCqg/user-jpws20EdWU4AN9FWb7rbrE4p/img-ns8YSV7kEaOYVdcJL2C79Zue.png?st=2025-04-28T16%3A45%3A42Z&se=2025-04-28T18%3A45%3A42Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=475fd488-6c59-44a5-9aa9-31c4db451bea&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-28T06%3A48%3A38Z&ske=2025-04-29T06%3A48%3A38Z&sks=b&skv=2024-08-04&sig=1vMy6XWr3vH3a/jonR/%2Bjg3uwQ7Lzidex5YZk9nj0ZE%3D" alt="Dash card" />
-               <img src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-GYnh8ffasQyyYY4klwAQrCqg/user-jpws20EdWU4AN9FWb7rbrE4p/img-FBjn0q6et4mdPB5AaVeFLvqU.png?st=2025-04-28T16%3A46%3A25Z&se=2025-04-28T18%3A46%3A25Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=475fd488-6c59-44a5-9aa9-31c4db451bea&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-27T23%3A41%3A03Z&ske=2025-04-28T23%3A41%3A03Z&sks=b&skv=2024-08-04&sig=9iMwnS6jOgSvQDOMOCnSjH88Sl9MDWTSoGdSd27sFcM%3D" alt="Stealth card" />
-               <img src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-GYnh8ffasQyyYY4klwAQrCqg/user-jpws20EdWU4AN9FWb7rbrE4p/img-qSZ0P7sAeWd9iffrtrnDpLsz.png?st=2025-04-28T16%3A47%3A11Z&se=2025-04-28T18%3A47%3A11Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=475fd488-6c59-44a5-9aa9-31c4db451bea&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-28T14%3A11%3A12Z&ske=2025-04-29T14%3A11%3A12Z&sks=b&skv=2024-08-04&sig=n7zw0PIgWim292DdMnRFcdkdKhiOdRi6KRv6FnKw6y0%3D" alt="Disable card" />
+        <div id="game-container">
+          <!-- Asset Integration Code Segment -->
+          <div id="gameCanvasWrapper">
+            <canvas id="gameCanvas"></canvas>
+            <div id="uiContainer">
+                <div id="cards">
+                    <div class="card" id="dashCard">
+                        <img src="card_dash.png" alt="DASH Card">
+                    </div>
+                    <div class="card" id="stealthCard">
+                        <img src="card_stealth.png" alt="STEALTH Card">
+                    </div>
+                    <div class="card" id="disableCard">
+                        <img src="card_disable.png" alt="DISABLE Card">
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
+          </div>
+          <!-- End of Asset Integration Code Segment -->
+        </div>
     </div>
 
     <div id="game-over-screen" class="screen">
@@ -257,16 +284,17 @@
             <button id="main-menu-button">Main Menu</button>
         </div>
     </div>
+    
+    <!-- Asset Integration Code Segment -->
     <audio autoplay="" id="background-music" loop="">
       <source src="background-music.mp3" type="audio/mpeg" />
     </audio>
     <audio id="start-game-sound">
       <source src="start-game-sound.mp3" type="audio/mpeg" />
     </audio>
-    <!--Extra audio tags for sound effects-->
-    <!-- End Asset Integration Code Segment -->
+	<!-- End of Asset Integration Code Segment -->
 
-	<script>
+    <script>
       document.addEventListener('DOMContentLoaded', () => {
         class GameUI {
           constructor() {
@@ -275,62 +303,67 @@
             this.instructionsScreen = document.getElementById('instructions-screen');
             this.gameContainer = document.getElementById('game-screen');
             this.gameOverScreen = document.getElementById('game-over-screen');
-            this.gameControls = document.getElementById('game-controls');
-            this.hud = document.getElementById('hud');
+			this.gameControls = document.getElementById('game-controls');
+			this.hud = document.getElementById('hud');
           };
-
+		  
+		  
           swapToScreen(screen) {
             this.startMenuScreen.classList.remove('active');
             this.settingsScreen.classList.remove('active');
             this.instructionsScreen.classList.remove('active');
             this.gameContainer.classList.remove('active');
             this.gameOverScreen.classList.remove('active');
-            screen.classList.add('active');
-
-            if (screen.id === 'game-screen') {
-              this.hud.style.display = 'block';
-              this.gameControls.style.display = 'block';
-            } else {
-              this.hud.style.display = 'none';
-              this.gameControls.style.display = 'none';
-            }
+            screen.classList.add('active');			
+			
+			if (screen.id === 'game-screen') {
+				this.hud.style.display = 'block';
+				this.gameControls.style.display = 'block';
+			} else {
+				this.hud.style.display = 'none';
+				this.gameControls.style.display = 'none';
+			}
           };
-
+		  
           startGame() {
             const startGameSound = document.getElementById('start-game-sound');
             this.swapToScreen(this.gameContainer);
             startGameSound.play();
+            // Your start game code here;
           }
-
+		  
           endGame() {
             const endGameSound = document.getElementById('end-game-sound');
             this.swapToScreen(this.gameOverScreen);
             endGameSound.play();
+            // Your end game code here;
           }
-
+		  
           mainMenu() {
             this.swapToScreen(this.startMenuScreen);
           }
-
+		  
           playAgain() {
             this.swapToScreen(this.gameContainer);
           }
-
+		  
           settings() {
             this.swapToScreen(this.settingsScreen);
           }
-
+		  
           instructions() {
             this.swapToScreen(this.instructionsScreen);
-          }
+          } 
+          
+          // Your UI functions here;
+		  
         }
-
         class GameLogic {
           constructor() {
           }
           // Your game logic here;
+          [[JS_CODE]]
         }
-
         class Game {
           constructor() {
             this.ui = new GameUI();
@@ -338,35 +371,43 @@
             this.lastFrameTime = 0;
             this.updateInterval = 1000 / 60;
             this.done = false;
-            this.isPaused = false;
-            this.animationFrameId = null;
+			this.isPaused = false;
+			this.animationFrameId = null;
           }
           prepareGame() {
             const gameContainer = document.getElementById('game-screen');
+            // Prepare game container DOM elements here;
+            // Connect DOM element to game logic or game ui accordingly;
             this.assignButtons();
           }
           startGame() {
             this.ui.startGame();
-            if(this.animationFrameId)
-            {
-              cancelAnimationFrame(this.animationFrameId);
-            }
-            this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this));
+            // Start game logic here;
+            
+            // this.updateInterval = /* Your desired update interval */;
+            
+			if(this.animationFrameId)
+			{
+				cancelAnimationFrame(this.animationFrameId);
+			}
+			this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this));
           }
           updateGame() {
+            // Update game logic here;
           }
           resetGame() {
-            this.isPaused = false;
-            cancelAnimationFrame(this.animationFrameId);
+            // Reset game logic here; 			
+			this.isPaused = false;
+			cancelAnimationFrame(this.animationFrameId);
           }
-          pause() {
-            this.isPaused = true;
-            cancelAnimationFrame(this.animationFrameId);
-          }
-          resume() {
-            this.isPaused = false;
-            this.gameLoop();
-          }
+		  pause() {
+			this.isPaused = true;
+			cancelAnimationFrame(this.animationFrameId);
+		  }
+		  resume() {
+			this.isPaused = false;
+			this.gameLoop();
+		  }
           gameLoop(timestamp) {
             if (this.done) return;
             const deltaTime = timestamp - this.lastFrameTime;
@@ -375,43 +416,43 @@
               this.lastFrameTime = timestamp;
             }
             if(this.animationFrameId)
-            {
-              cancelAnimationFrame(this.animationFrameId);
-            }
-            this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this));
+			{
+				cancelAnimationFrame(this.animationFrameId);
+			}
+			this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this));
           }
           assignButtons() {
             const playButton = document.getElementById('play-button');
-            const settingsButton = document.getElementById('settings-button');
-            const instructionsButton = document.getElementById('instructions-button');
-            const playAgainButton = document.getElementById('play-again-button');
-            const mainMenuButtons = document.querySelectorAll('#game-over-main-menu-button, #settings-back-button, #instructions-back-button');
-            const gameMenuButton = document.getElementById('game-menu-button');
-            const gameRestartButton = document.getElementById('game-restart-button');
-            const gameInstructionsButton = document.getElementById('game-instructions-button');
+			const settingsButton = document.getElementById('settings-button');
+			const instructionsButton = document.getElementById('instructions-button');
+			const playAgainButton = document.getElementById('play-again-button');
+			const mainMenuButtons = document.querySelectorAll('#game-over-main-menu-button, #settings-back-button, #instructions-back-button');
+			const gameMenuButton = document.getElementById('game-menu-button');
+			const gameRestartButton = document.getElementById('game-restart-button');
+			const gameInstructionsButton = document.getElementById('game-instructions-button');
 
-            playButton.addEventListener('click', this.startGame.bind(this));
-            settingsButton.addEventListener('click', this.ui.settings.bind(this.ui));
-            instructionsButton.addEventListener('click', this.ui.instructions.bind(this.ui));
-            playAgainButton.addEventListener('click', this.startGame.bind(this));
-            mainMenuButtons.forEach(button => button.addEventListener('click', () => {
-              this.ui.mainMenu();
-            }));
-            gameMenuButton.addEventListener('click', () => {
-              this.ui.mainMenu();
-            });
-            gameRestartButton.addEventListener('click', this.startGame.bind(this));
-            gameInstructionsButton.addEventListener('click', () => {
-              this.pause();
-              this.ui.swapToScreen(this.ui.instructionsScreen);
-              document.getElementById('instructions-back-button').addEventListener('click', () => {
-                this.ui.swapToScreen(this.ui.gameContainer);
-                this.resume();
-              }, { once: true });
-            });
+			playButton.addEventListener('click', this.startGame.bind(this));
+			settingsButton.addEventListener('click', this.ui.settings.bind(this.ui));
+			instructionsButton.addEventListener('click', this.ui.instructions.bind(this.ui));
+			playAgainButton.addEventListener('click', this.startGame.bind(this));
+			mainMenuButtons.forEach(button => button.addEventListener('click', () => {
+				this.ui.mainMenu();
+			}));
+			gameMenuButton.addEventListener('click', () => {
+				this.ui.mainMenu();
+			});
+			gameRestartButton.addEventListener('click', this.startGame.bind(this));
+			gameInstructionsButton.addEventListener('click', () => {
+					this.pause(); 			
+					this.ui.swapToScreen(this.ui.instructionsScreen);
+					document.getElementById('instructions-back-button').addEventListener('click', () => {
+						this.ui.swapToScreen(this.ui.gameContainer);
+						this.resume();
+					}, { once: true });
+				});
             
-            // Your button event listeners here
-          }
+			// Your button event listeners here
+          } 
         }
         const game = new Game();
         game.prepareGame();

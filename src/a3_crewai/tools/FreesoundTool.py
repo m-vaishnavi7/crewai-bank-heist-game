@@ -10,7 +10,7 @@ class FreesoundTool(BaseTool):
     output_dir: str
 
     def __init__(self, api_key: Optional[str] = None, output_dir: str = "output/sounds"):
-        effective_api_key = "D2Fz146aA131URJz3rmPtfVZwBgqwJqATHrhFILC"
+        effective_api_key = "" #Enter the API key
         super().__init__(
             name="freesound",
             description="Download audio from Freesound.org. Input should be a dictionary with 'query', optional 'license_filter' (default 'Creative Commons 0'), and optional 'filename'. Returns JSON status.",
