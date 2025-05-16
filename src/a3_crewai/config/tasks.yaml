@@ -8,10 +8,21 @@ ui_css_generation:
     6. Write responsive CSS inside a single <style> tag:
        - **Desktop**: canvas and controls side‑by‑side.  
        - **Mobile**: canvas stacked above controls.  
-       - Apply your theme’s colors and typography.  
-    7. Wrap **only** the new markup + CSS in:
+       - Apply your theme’s colors and typography. 
+    7. Write **one** <style> tag (mobile-first):  
+       - **≤ 800 px**:  
+         * Canvas fills full width; card panel collapses into a fixed column on the right (vertical scroll allowed).  
+         * Buttons scale to ≥ 48 px hit area.  
+         * Hide purely decorative elements to maximise play area. 
+         
+       - **> 800 px**:  
+         * Canvas and card panel sit side-by-side in a flex layout; card panel has a max-width so canvas dominates.  
+       - Apply theme colours, typography, shadows, and subtle animations from requirements.  
+       - Provide **cool-down styling** for disabled cards (e.g. grayscale + 60 % opacity).  
+    8. Ensure **Play, Restart, Settings, Instructions** buttons remain visible and tappable at all break-points.   
+    9. Wrap **only** the new markup + CSS in:
        <!-- UI/CSS Code Segment -->  
-    8. Do **not** modify any other template content.
+    10. Do **not** modify any other template content.
   expected_output: >
     HTML and CSS snippet labeled "UI/CSS Code Segment".
 
@@ -28,10 +39,15 @@ game_logic_generation:
        - checkWinLose() to detect key pick‑up or enemy detection.  
        - Comments on each method.  
        - integrate player enemy movements in moveEnemy()
+       - moveEnemy() to integrate enemy patrol / pursuit. 
+       - ADD BUTTONS FOR MOVEMENTS INSTEAD OF touch controls, up/down/left/right buttons to used for moving the player. 
+       - A 3x3 radar around the enemy, that is used to detect collision with the player.
        - If any cards are to be used, place them to the right in a container.
-    4. Label and output **only** this code as:
+    4. Place the three card elements in the right-hand panel created by ui_css_generation.
+    5. Label and output **only** this code as:
        // JavaScript Logic Segment  
-    5. Do **not** touch any HTML outside this script block.
+    6. Do **not** touch any HTML outside this script block.
+    
   expected_output: >
     JavaScript class implementing core gameplay logic, labeled "JavaScript Logic Segment".
 

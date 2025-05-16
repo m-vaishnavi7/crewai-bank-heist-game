@@ -131,66 +131,49 @@
                 padding: 6px 12px;
             }
         }
-        
-        /* Your style goes here  */
+
+    /* Your style goes here  */
+    /* Additional UI/CSS Code Segment */    
+    #game-container {
+        background-image: url('https://oaidalleapiprodscus.blob.core.windows.net/private/org-GYnh8ffasQyyYY4klwAQrCqg/user-jpws20EdWU4AN9FWb7rbrE4p/img-iLBVTSTpImrXa4XTsmYM3LXI.png?st=2025-05-16T01%3A56%3A15Z&se=2025-05-16T03%3A56%3A15Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=475fd488-6c59-44a5-9aa9-31c4db451bea&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-15T21%3A32%3A44Z&ske=2025-05-16T21%3A32%3A44Z&sks=b&skv=2024-08-04&sig=C5Npbp33V4I/wEmi2zsB4ZZi/wIk4bo1fAzPRpY5TAQ%3D'); 
+        background-size: cover;
+    }
+
+    .card {
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    img#card-dash {
+        src: url('https://oaidalleapiprodscus.blob.core.windows.net/private/org-GYnh8ffasQyyYY4klwAQrCqg/user-jpws20EdWU4AN9FWb7rbrE4p/img-F8AYUZy22nXMLm80BxknC9nP.png?st=2025-05-16T01%3A56%3A27Z&se=2025-05-16T03%3A56%3A27Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=475fd488-6c59-44a5-9aa9-31c4db451bea&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-15T21%3A33%3A02Z&ske=2025-05-16T21%3A33%3A02Z&sks=b&skv=2024-08-04&sig=6hxi3LiyAkFBOmq7XRlKqmIRV%2B5hv0Ih02nEONaX3Po%3D');
+    }
+
+    img#card-stealth {
+        src: url('https://oaidalleapiprodscus.blob.core.windows.net/private/org-GYnh8ffasQyyYY4klwAQrCqg/user-jpws20EdWU4AN9FWb7rbrE4p/img-G7CpmBKBdkzAWYMJnxkWdbVC.png?st=2025-05-16T01%3A56%3A41Z&se=2025-05-16T03%3A56%3A41Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=475fd488-6c59-44a5-9aa9-31c4db451bea&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-16T02%3A14%3A59Z&ske=2025-05-17T02%3A14%3A59Z&sks=b&skv=2024-08-04&sig=%2B7A5ImMfqTaCDNoFMQboGzzcCZ6KqVRjx%2BLHmaT%2B4Cg%3D');
+    }
+
+    img#card-disable {
+        src: url('https://oaidalleapiprodscus.blob.core.windows.net/private/org-GYnh8ffasQyyYY4klwAQrCqg/user-jpws20EdWU4AN9FWb7rbrE4p/img-g30wc1Xc6nVMg8lvagLcqII8.png?st=2025-05-16T01%3A56%3A56Z&se=2025-05-16T03%3A56%3A56Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=475fd488-6c59-44a5-9aa9-31c4db451bea&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-15T22%3A09%3A24Z&ske=2025-05-16T22%3A09%3A24Z&sks=b&skv=2024-08-04&sig=SWmSk4dAjOFzOgaZXSdpjbmf%2BGXyEf2mAnkPRCQweSo%3D');
+    }
     
-      /* Responsive HTML & CSS for "The Bank Heist - Cards Edition" */
-
-      /* Mobile First - Stack Canvas and Controls */
-      #game-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      #gameCanvas {
-        width: 90vw;
-        max-width: 400px;
-        background-color: #0f3460;
-        border: 2px solid #e94560;
-        box-shadow: 0 0 20px rgba(233, 69, 96, 0.5);
-      }
-
-      #uiContainer {
-        display: flex;
-        justify-content: center;
-        margin-top: 10px;
-        width: 100%;
-      }
-
-      #cards {
-        display: flex;
-        justify-content: space-around;
-        width: 90%;
-        max-width: 400px;
-      }
-
-      #cards img {
-        width: 80px;
-        height: 120px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-        transition: transform 0.3s ease;
-        cursor: pointer;
-      }
-
-      #cards img:hover {
-        transform: scale(1.1);
-      }
-
-      @media (min-width: 768px) {
-        /* Desktop - Canvas and Controls Side-by-Side */
-        #game-container {
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: flex-start;
-        }
-
-        #uiContainer {
-          max-width: 350px;
-          margin-left: 20px;
-        }
-      }
-   </style>
+    img#player-image {
+        background-image: url('https://oaidalleapiprodscus.blob.core.windows.net/private/org-GYnh8ffasQyyYY4klwAQrCqg/user-jpws20EdWU4AN9FWb7rbrE4p/img-nB8ZXJfhQtNliL3uiltt9Eur.png?st=2025-05-16T01%3A55%3A39Z&se=2025-05-16T03%3A55%3A39Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=475fd488-6c59-44a5-9aa9-31c4db451bea&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-15T20%3A36%3A00Z&ske=2025-05-16T20%3A36%3A00Z&sks=b&skv=2024-08-04&sig=x%2B5Te5KDEVRqqVLFPFyeOoM4cWCdyHqb%2B/4Sa7Vewsw%3D'); 
+    }
+    
+    img#guard-image {
+        background-image: url('https://oaidalleapiprodscus.blob.core.windows.net/private/org-GYnh8ffasQyyYY4klwAQrCqg/user-jpws20EdWU4AN9FWb7rbrE4p/img-GwWuHwM7pkrpstwo4HxGvnyQ.png?st=2025-05-16T01%3A55%3A53Z&se=2025-05-16T03%3A55%3A53Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=475fd488-6c59-44a5-9aa9-31c4db451bea&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-15T21%3A08%3A53Z&ske=2025-05-16T21%3A08%3A53Z&sks=b&skv=2024-08-04&sig=0cew0Uai3QPpMnJ7LCH5Whyu14m5cnGTMQBiQd9CouA%3D'); 
+    }
+    
+    img#vault-image {
+        background-image: url('https://oaidalleapiprodscus.blob.core.windows.net/private/org-GYnh8ffasQyyYY4klwAQrCqg/user-jpws20EdWU4AN9FWb7rbrE4p/img-B1FmMXZnsViRZfol8KP4Vg0w.png?st=2025-05-16T01%3A57%3A12Z&se=2025-05-16T03%3A57%3A12Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=475fd488-6c59-44a5-9aa9-31c4db451bea&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-15T21%3A00%3A09Z&ske=2025-05-16T21%3A00%3A09Z&sks=b&skv=2024-08-04&sig=cEezvDD//QBSnsLKzx1/oh0g8jxS1p17fJ9uiUKnGM4%3D'); 
+    }
+    
+    img#exit-image {
+        background-image: url('https://oaidalleapiprodscus.blob.core.windows.net/private/org-GYnh8ffasQyyYY4klwAQrCqg/user-jpws20EdWU4AN9FWb7rbrE4p/img-WG0Josyi2SVF6kNVDnN22wUs.png?st=2025-05-16T01%3A57%3A34Z&se=2025-05-16T03%3A57%3A34Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=475fd488-6c59-44a5-9aa9-31c4db451bea&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-15T14%3A49%3A13Z&ske=2025-05-16T14%3A49%3A13Z&sks=b&skv=2024-08-04&sig=ZLfNJw5C7X3KNr1NCEn7qyoToQBf17c7PtJ2dSZF%2BEI%3D'); 
+    }
+    
+    
+    </style>
   </head>
   <body>
     <div id="game-controls">
@@ -198,7 +181,7 @@
         <button id="game-restart-button">Restart</button>
         <button id="game-instructions-button">Instructions</button>
     </div>
-	<!-- Use HUD for Score, High Score, and Other Game Information -->
+    <!-- Use HUD for Score, High Score, and Other Game Information -->
     <div id="hud"></div>
 
     <div id="start-menu-screen" class="active screen">
@@ -236,18 +219,7 @@
     </div>
 
     <div id="game-screen" class="screen">
-      <div id="game-container">
-         <!-- Insert canvas element for game rendering -->
-         <canvas id="gameCanvas" width="400" height="400"></canvas>
-         <!-- UI Container for cards -->
-         <div id="uiContainer">
-            <div id="cards">
-               <img src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-GYnh8ffasQyyYY4klwAQrCqg/user-jpws20EdWU4AN9FWb7rbrE4p/img-ns8YSV7kEaOYVdcJL2C79Zue.png?st=2025-04-28T16%3A45%3A42Z&se=2025-04-28T18%3A45%3A42Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=475fd488-6c59-44a5-9aa9-31c4db451bea&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-28T06%3A48%3A38Z&ske=2025-04-29T06%3A48%3A38Z&sks=b&skv=2024-08-04&sig=1vMy6XWr3vH3a/jonR/%2Bjg3uwQ7Lzidex5YZk9nj0ZE%3D" alt="Dash card" />
-               <img src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-GYnh8ffasQyyYY4klwAQrCqg/user-jpws20EdWU4AN9FWb7rbrE4p/img-FBjn0q6et4mdPB5AaVeFLvqU.png?st=2025-04-28T16%3A46%3A25Z&se=2025-04-28T18%3A46%3A25Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=475fd488-6c59-44a5-9aa9-31c4db451bea&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-27T23%3A41%3A03Z&ske=2025-04-28T23%3A41%3A03Z&sks=b&skv=2024-08-04&sig=9iMwnS6jOgSvQDOMOCnSjH88Sl9MDWTSoGdSd27sFcM%3D" alt="Stealth card" />
-               <img src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-GYnh8ffasQyyYY4klwAQrCqg/user-jpws20EdWU4AN9FWb7rbrE4p/img-qSZ0P7sAeWd9iffrtrnDpLsz.png?st=2025-04-28T16%3A47%3A11Z&se=2025-04-28T18%3A47%3A11Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=475fd488-6c59-44a5-9aa9-31c4db451bea&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-28T14%3A11%3A12Z&ske=2025-04-29T14%3A11%3A12Z&sks=b&skv=2024-08-04&sig=n7zw0PIgWim292DdMnRFcdkdKhiOdRi6KRv6FnKw6y0%3D" alt="Disable card" />
-            </div>
-         </div>
-      </div>
+        <div id="game-container"></div>
     </div>
 
     <div id="game-over-screen" class="screen">
@@ -258,15 +230,15 @@
         </div>
     </div>
     <audio autoplay="" id="background-music" loop="">
-      <source src="background-music.mp3" type="audio/mpeg" />
+      <source src="https://example.com/audio/background-music.mp3" type="audio/mpeg" />
     </audio>
     <audio id="start-game-sound">
-      <source src="start-game-sound.mp3" type="audio/mpeg" />
+      <source src="https://example.com/audio/start-game-sound.mp3" type="audio/mpeg" />
     </audio>
     <!--Extra audio tags for sound effects-->
-    <!-- End Asset Integration Code Segment -->
 
-	<script>
+    <!--You will create your own scripts in the following files-->    
+    <script>
       document.addEventListener('DOMContentLoaded', () => {
         class GameUI {
           constructor() {
@@ -275,62 +247,52 @@
             this.instructionsScreen = document.getElementById('instructions-screen');
             this.gameContainer = document.getElementById('game-screen');
             this.gameOverScreen = document.getElementById('game-over-screen');
-            this.gameControls = document.getElementById('game-controls');
-            this.hud = document.getElementById('hud');
+          this.gameControls = document.getElementById('game-controls');
+          this.hud = document.getElementById('hud');
           };
-
           swapToScreen(screen) {
             this.startMenuScreen.classList.remove('active');
             this.settingsScreen.classList.remove('active');
             this.instructionsScreen.classList.remove('active');
             this.gameContainer.classList.remove('active');
             this.gameOverScreen.classList.remove('active');
-            screen.classList.add('active');
-
-            if (screen.id === 'game-screen') {
-              this.hud.style.display = 'block';
-              this.gameControls.style.display = 'block';
+            screen.classList.add('active');      
+          
+          if (screen.id === 'game-screen') {
+      this.hud.style.display = 'block';
+      this.gameControls.style.display = 'block';
             } else {
-              this.hud.style.display = 'none';
-              this.gameControls.style.display = 'none';
+      this.hud.style.display = 'none';
+      this.gameControls.style.display = 'none';
             }
           };
-
           startGame() {
             const startGameSound = document.getElementById('start-game-sound');
             this.swapToScreen(this.gameContainer);
             startGameSound.play();
           }
-
           endGame() {
             const endGameSound = document.getElementById('end-game-sound');
             this.swapToScreen(this.gameOverScreen);
             endGameSound.play();
           }
-
           mainMenu() {
             this.swapToScreen(this.startMenuScreen);
           }
-
           playAgain() {
             this.swapToScreen(this.gameContainer);
           }
-
           settings() {
             this.swapToScreen(this.settingsScreen);
           }
-
           instructions() {
             this.swapToScreen(this.instructionsScreen);
-          }
+          }     
         }
-
         class GameLogic {
           constructor() {
           }
-          // Your game logic here;
         }
-
         class Game {
           constructor() {
             this.ui = new GameUI();
@@ -338,8 +300,8 @@
             this.lastFrameTime = 0;
             this.updateInterval = 1000 / 60;
             this.done = false;
-            this.isPaused = false;
-            this.animationFrameId = null;
+      this.isPaused = false;
+      this.animationFrameId = null;
           }
           prepareGame() {
             const gameContainer = document.getElementById('game-screen');
@@ -347,26 +309,25 @@
           }
           startGame() {
             this.ui.startGame();
-            if(this.animationFrameId)
-            {
-              cancelAnimationFrame(this.animationFrameId);
+            if(this.animationFrameId) {
+      cancelAnimationFrame(this.animationFrameId);
             }
-            this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this));
+      this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this));
           }
           updateGame() {
           }
           resetGame() {
-            this.isPaused = false;
-            cancelAnimationFrame(this.animationFrameId);
+      this.isPaused = false;
+      cancelAnimationFrame(this.animationFrameId);
           }
-          pause() {
-            this.isPaused = true;
-            cancelAnimationFrame(this.animationFrameId);
-          }
-          resume() {
-            this.isPaused = false;
-            this.gameLoop();
-          }
+    pause() {
+      this.isPaused = true;
+      cancelAnimationFrame(this.animationFrameId);
+    }
+    resume() {
+      this.isPaused = false;
+      this.gameLoop();
+    }
           gameLoop(timestamp) {
             if (this.done) return;
             const deltaTime = timestamp - this.lastFrameTime;
@@ -375,42 +336,40 @@
               this.lastFrameTime = timestamp;
             }
             if(this.animationFrameId)
-            {
-              cancelAnimationFrame(this.animationFrameId);
-            }
-            this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this));
+      {
+        cancelAnimationFrame(this.animationFrameId);
+      }
+      this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this));
           }
           assignButtons() {
             const playButton = document.getElementById('play-button');
-            const settingsButton = document.getElementById('settings-button');
-            const instructionsButton = document.getElementById('instructions-button');
-            const playAgainButton = document.getElementById('play-again-button');
-            const mainMenuButtons = document.querySelectorAll('#game-over-main-menu-button, #settings-back-button, #instructions-back-button');
-            const gameMenuButton = document.getElementById('game-menu-button');
-            const gameRestartButton = document.getElementById('game-restart-button');
-            const gameInstructionsButton = document.getElementById('game-instructions-button');
+      const settingsButton = document.getElementById('settings-button');
+      const instructionsButton = document.getElementById('instructions-button');
+      const playAgainButton = document.getElementById('play-again-button');
+      const mainMenuButtons = document.querySelectorAll('#game-over-main-menu-button, #settings-back-button, #instructions-back-button');
+      const gameMenuButton = document.getElementById('game-menu-button');
+      const gameRestartButton = document.getElementById('game-restart-button');
+      const gameInstructionsButton = document.getElementById('game-instructions-button');
 
-            playButton.addEventListener('click', this.startGame.bind(this));
-            settingsButton.addEventListener('click', this.ui.settings.bind(this.ui));
-            instructionsButton.addEventListener('click', this.ui.instructions.bind(this.ui));
-            playAgainButton.addEventListener('click', this.startGame.bind(this));
-            mainMenuButtons.forEach(button => button.addEventListener('click', () => {
-              this.ui.mainMenu();
-            }));
-            gameMenuButton.addEventListener('click', () => {
-              this.ui.mainMenu();
-            });
-            gameRestartButton.addEventListener('click', this.startGame.bind(this));
-            gameInstructionsButton.addEventListener('click', () => {
-              this.pause();
-              this.ui.swapToScreen(this.ui.instructionsScreen);
-              document.getElementById('instructions-back-button').addEventListener('click', () => {
-                this.ui.swapToScreen(this.ui.gameContainer);
-                this.resume();
-              }, { once: true });
-            });
-            
-            // Your button event listeners here
+      playButton.addEventListener('click', this.startGame.bind(this));
+      settingsButton.addEventListener('click', this.ui.settings.bind(this.ui));
+      instructionsButton.addEventListener('click', this.ui.instructions.bind(this.ui));
+      playAgainButton.addEventListener('click', this.startGame.bind(this));
+      mainMenuButtons.forEach(button => button.addEventListener('click', () => {
+        this.ui.mainMenu();
+      }));
+      gameMenuButton.addEventListener('click', () => {
+        this.ui.mainMenu();
+      });
+      gameRestartButton.addEventListener('click', this.startGame.bind(this));
+      gameInstructionsButton.addEventListener('click', () => {
+                this.pause();           
+        this.ui.swapToScreen(this.ui.instructionsScreen);
+        document.getElementById('instructions-back-button').addEventListener('click', () => {
+          this.ui.swapToScreen(this.ui.gameContainer);
+          this.resume();
+        }, { once: true });
+          });
           }
         }
         const game = new Game();

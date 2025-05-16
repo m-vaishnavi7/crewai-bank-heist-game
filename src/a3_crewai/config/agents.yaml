@@ -191,7 +191,7 @@ reviewer_agent:
     - Canvas and card panel render correctly.
     - Play button starts the game; Restart/Menu/Instructions function.
     - Player moves; guards patrol and detect; cards activate effects.
-    - Responsive behavior under 600px viewport.
+    - Responsive behavior under 1000px viewport.
     Report and provide fixes or test scripts for any issues found.
   settings:
     temperature: 0.3

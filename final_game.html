@@ -70,16 +70,16 @@
             left: 0;
             width: 100%;
             background-color: rgba(26, 26, 46, 0.8);
-            padding: 10px 0;
+            padding: 10px 0; /* Changed padding */
             z-index: 101;
             display: none;
-            text-align: center;
+            text-align: center; /* Center align the content */
         }
         #game-controls button {
             display: inline-block;
             width: auto;
             padding: 8px 15px;
-            margin: 0 5px;
+            margin: 0 5px; /* Reduced side margins */
             font-size: 14px;
         }
         #hud {
@@ -132,63 +132,45 @@
                 padding: 6px 12px;
             }
         }
-
-      /* Responsive HTML & CSS for "The Bank Heist - Cards Edition" */
-
-      /* Mobile First - Stack Canvas and Controls */
-      #game-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      #gameCanvas {
-        width: 90vw;
-        max-width: 400px;
-        background-color: #0f3460;
-        border: 2px solid #e94560;
-        box-shadow: 0 0 20px rgba(233, 69, 96, 0.5);
-      }
-
-      #uiContainer {
-        display: flex;
-        justify-content: center;
-        margin-top: 10px;
-        width: 100%;
-      }
-
-      #cards {
-        display: flex;
-        justify-content: space-around;
-        width: 90%;
-        max-width: 400px;
-      }
-
-      #cards img {
-        width: 80px;
-        height: 120px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-        transition: transform 0.3s ease;
-        cursor: pointer;
-      }
-
-      #cards img:hover {
-        transform: scale(1.1);
-      }
-
-      @media (min-width: 768px) {
-        /* Desktop - Canvas and Controls Side-by-Side */
-        #game-container {
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: flex-start;
+        
+        #gameCanvas {
+            display: block;
+            background-color: #1a1a2e;
+            margin: 0 auto;
+            border: 2px solid #e94560;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
         #uiContainer {
-          max-width: 350px;
-          margin-left: 20px;
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
         }
-      }
+
+        #cards {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        #cards img {
+            width: 90px;
+            height: 140px;
+            border: 2px solid #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            #uiContainer {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #cards {
+                margin-top: 10px;
+            }
+        }
     </style>
   </head>
   <body>
@@ -201,7 +183,7 @@
 
     <div id="start-menu-screen" class="active screen">
         <div class="container">
-            <h1 id="game-title">The Bank Heist - Cards Edition</h1>
+            <h1 id="game-title">Your Game Title</h1>
             <button id="play-button">Play</button>
             <button id="settings-button">Settings</button>
             <button id="instructions-button">Instructions</button>
@@ -233,16 +215,7 @@
     </div>
 
     <div id="game-screen" class="screen">
-      <div id="game-container">
-         <canvas id="gameCanvas" width="400" height="400"></canvas>
-         <div id="uiContainer">
-            <div id="cards">
-               <img src="card_dash.png" alt="Dash card" />
-               <img src="card_stealth.png" alt="Stealth card" />
-               <img src="card_disable.png" alt="Disable card" />
-            </div>
-        </div>
-      </div>
+        <div id="game-container"></div>
     </div>
 
     <div id="game-over-screen" class="screen">
@@ -258,7 +231,22 @@
     <audio id="start-game-sound">
       <source src="start-game-sound.mp3" type="audio/mpeg" />
     </audio>
-    
+
+    <div id="gameCanvasContainer" class="screen">
+        <canvas id="gameCanvas" width="400" height="400"></canvas>
+        <div id="uiContainer">
+            <div id="hud">
+                <p>Active Power: <span id="activePower"></span></p>
+                <p>Timer: <span id="timer"></span></p>
+            </div>
+            <div id="cards">
+                <img src="card_dash.png" alt="DASH Card">
+                <img src="card_stealth.png" alt="STEALTH Card">
+                <img src="card_disable.png" alt="DISABLE Card">
+            </div>
+        </div>
+    </div>
+
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         class GameUI {
@@ -268,10 +256,10 @@
             this.instructionsScreen = document.getElementById('instructions-screen');
             this.gameContainer = document.getElementById('game-screen');
             this.gameOverScreen = document.getElementById('game-over-screen');
-      this.gameControls = document.getElementById('game-controls');
-      this.hud = document.getElementById('hud');
+            this.gameControls = document.getElementById('game-controls');
+            this.hud = document.getElementById('hud');
           };
-          
+      
           swapToScreen(screen) {
             this.startMenuScreen.classList.remove('active');
             this.settingsScreen.classList.remove('active');
@@ -280,180 +268,200 @@
             this.gameOverScreen.classList.remove('active');
             screen.classList.add('active');      
       
-      if (screen.id === 'game-screen') {
-        this.hud.style.display = 'block';
-        this.gameControls.style.display = 'block';
-      } else {
-        this.hud.style.display = 'none';
-        this.gameControls.style.display = 'none';
-      }
+            if (screen.id === 'game-screen') {
+                this.hud.style.display = 'block';
+                this.gameControls.style.display = 'block';
+            } else {
+                this.hud.style.display = 'none';
+                this.gameControls.style.display = 'none';
+            }
           };
-          
+      
           startGame() {
             const startGameSound = document.getElementById('start-game-sound');
             this.swapToScreen(this.gameContainer);
             startGameSound.play();
+            // Your start game code here;
           }
-          
+      
           endGame() {
             const endGameSound = document.getElementById('end-game-sound');
             this.swapToScreen(this.gameOverScreen);
             endGameSound.play();
+            // Your end game code here;
           }
-          
+      
           mainMenu() {
             this.swapToScreen(this.startMenuScreen);
           }
-          
+      
           playAgain() {
             this.swapToScreen(this.gameContainer);
           }
-          
+      
           settings() {
             this.swapToScreen(this.settingsScreen);
           }
-          
+      
           instructions() {
             this.swapToScreen(this.instructionsScreen);
-          }      
+          }        
           
         }
-
         class GameLogic {
           constructor(canvasId) {
             this.canvas = document.getElementById(canvasId);
             this.context = this.canvas.getContext('2d');
+            this.gameState = {
+                playerPosition: { x: 0, y: 0 },
+                guardPositions: [],
+                vaultPosition: { x: 48, y: 48 },
+                exitPosition: { x: 0, y: 49 },
+                hasVaultKey: false,
+                isGameOver: false,
+                activeCard: null,
+                cards: ['DASH', 'STEALTH', 'DISABLE']
+            };
             this.gridSize = 80;
             this.cellSize = this.canvas.width / this.gridSize;
-            this.playerPosition = { x: 0, y: 0 };
-            this.vaultKeyCollected = false;
-            this.guardPositions = [{ x: 20, y: 20 }, { x: 30, y: 30 }, { x: 40, y: 40 }];
-            this.cards = ['DASH', 'STEALTH', 'DISABLE'];
-            this.activeCard = null;
-            this.cardTimers = {};
-          }
+        }
 
-          init() {
-            this.randomizeStartingPosition();
-            this.drawGrid();
-            this.drawPlayer();
-            this.drawGuards();
-          }
+        init() {
+            this.gameState.playerPosition = this.getRandomEntrance();
+            this.gameState.guardPositions = this.initGuards();
+            this.draw();
+        }
 
-          randomizeStartingPosition() {
-            this.playerPosition = { x: Math.floor(Math.random() * this.gridSize), y: Math.floor(Math.random() * this.gridSize) };
-          }
-
-          draw() {
+        draw() {
             this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
             this.drawGrid();
             this.drawPlayer();
             this.drawGuards();
             this.drawVault();
             this.drawExit();
-            this.drawCards();
-          }
+        }
 
-          drawGrid() {
+        drawGrid() {
+            this.context.strokeStyle = 'rgba(255, 255, 255, 0.1)';
             for (let x = 0; x < this.gridSize; x++) {
-              for (let y = 0; y < this.gridSize; y++) {
-                this.context.strokeStyle = '#ccc';
-                this.context.strokeRect(x * this.cellSize, y * this.cellSize, this.cellSize, this.cellSize);
-              }
+                for (let y = 0; y < this.gridSize; y++) {
+                    this.context.strokeRect(x * this.cellSize, y * this.cellSize, this.cellSize, this.cellSize);
+                }
             }
-          }
+        }
 
-          drawPlayer() {
-            this.context.fillStyle = 'blue';
-            this.context.fillRect(this.playerPosition.x * this.cellSize, this.playerPosition.y * this.cellSize, this.cellSize, this.cellSize);
-          }
+        drawPlayer() {
+            this.context.drawImage(document.getElementById('playerImage'), this.gameState.playerPosition.x * this.cellSize, this.gameState.playerPosition.y * this.cellSize, this.cellSize, this.cellSize);
+        }
 
-          drawGuards() {
-            this.guardPositions.forEach(guard => {
-              this.context.fillStyle = 'red';
-              this.context.fillRect(guard.x * this.cellSize, guard.y * this.cellSize, this.cellSize, this.cellSize);
+        drawGuards() {
+            this.gameState.guardPositions.forEach(pos => {
+                this.context.drawImage(document.getElementById('guardImage'), pos.x * this.cellSize, pos.y * this.cellSize, this.cellSize, this.cellSize);
             });
-          }
+        }
 
-          drawVault() {
-            if (!this.vaultKeyCollected) {
-              this.context.fillStyle = 'gold';
-              this.context.fillRect(48 * this.cellSize, 48 * this.cellSize, this.cellSize, this.cellSize);
+        drawVault() {
+            this.context.drawImage(document.getElementById('vaultImage'), this.gameState.vaultPosition.x * this.cellSize, this.gameState.vaultPosition.y * this.cellSize, this.cellSize, this.cellSize);
+        }
+
+        drawExit() {
+            this.context.drawImage(document.getElementById('exitImage'), this.gameState.exitPosition.x * this.cellSize, this.gameState.exitPosition.y * this.cellSize, this.cellSize, this.cellSize);
+        }
+
+        movePlayer(direction) {
+            let newPosX = this.gameState.playerPosition.x;
+            let newPosY = this.gameState.playerPosition.y;
+
+            if (direction === 'left') { newPosX--; }
+            else if (direction === 'right') { newPosX++; }
+            else if (direction === 'up') { newPosY--; }
+            else if (direction === 'down') { newPosY++; }
+
+            if (this.isWithinBounds(newPosX, newPosY)) {
+                this.gameState.playerPosition = { x: newPosX, y: newPosY };
             }
-          }
 
-          drawExit() {
-            this.context.fillStyle = this.vaultKeyCollected ? 'green' : 'gray';
-            this.context.fillRect(0 * this.cellSize, 49 * this.cellSize, this.cellSize, this.cellSize);
-          }
-
-          drawCards() {
-            const cardElements = document.querySelectorAll('#cards img');
-            cardElements.forEach((card, index) => {
-            });
-          }
-
-          movePlayer(direction) {
-            if (direction === 'up')    this.playerPosition.y = Math.max(0, this.playerPosition.y - 1);
-            if (direction === 'down')  this.playerPosition.y = Math.min(this.gridSize - 1, this.playerPosition.y + 1);
-            if (direction === 'left')  this.playerPosition.x = Math.max(0, this.playerPosition.x - 1);
-            if (direction === 'right') this.playerPosition.x = Math.min(this.gridSize - 1, this.playerPosition.x + 1);
-            this.draw();
             this.checkWinLose();
-          }
-
-          applyCardEffect(cardId) {
-            this.activeCard = cardId;
-            this.cardTimers[cardId] = setTimeout(() => this.activeCard = null, 10000);
-
-            switch (cardId) {
-              case 'DASH':
-                console.log("DASH activated!");
-                break;
-              case 'STEALTH':
-                console.log("STEALTH activated!");
-                break;
-              case 'DISABLE':
-                console.log("DISABLE activated!");
-                break;
-            }
-          }
-
-          checkWinLose() {
-            if (!this.vaultKeyCollected && this.playerPosition.x === 48 && this.playerPosition.y === 48) {
-              this.vaultKeyCollected = true;
-              console.log("Vault Key Collected!");
-            }
-
-            if (this.vaultKeyCollected && this.playerPosition.x === 0 && this.playerPosition.y === 49) {
-              console.log("You Win!");
-            }
-
-            this.guardPositions.forEach(guard => {
-              if (this.playerPosition.x === guard.x && this.playerPosition.y === guard.y && this.activeCard !== 'STEALTH') {
-                console.log("Detected by a guard! Game Over.");
-              }
-            });
-          }
-
-          moveEnemy() {
-            this.guardPositions.forEach(guard => {
-              guard.x = (guard.x + 1) % this.gridSize;
-              guard.y = (guard.y + 1) % this.gridSize;
-            });
             this.draw();
-          }
+        }
+
+        applyCardEffect(cardId) {
+            switch (cardId) {
+                case 'DASH':
+                    this.gameState.activeCard = 'DASH';
+                    break;
+                case 'STEALTH':
+                    this.gameState.activeCard = 'STEALTH';
+                    break;
+                case 'DISABLE':
+                    this.gameState.activeCard = 'DISABLE';
+                    break;
+            }
+
+            this.updateCardUI(cardId);
+        }
+
+        checkWinLose() {
+            if (this.isAtPosition(this.gameState.playerPosition, this.gameState.vaultPosition) && !this.gameState.hasVaultKey) {
+                this.gameState.hasVaultKey = true;
+                console.log('Vault Key Collected!');
+            }
+
+            if (this.isAtPosition(this.gameState.playerPosition, this.gameState.exitPosition) && this.gameState.hasVaultKey) {
+                console.log('Player Wins!');
+                this.gameState.isGameOver = true;
+            }
+
+            this.gameState.guardPositions.forEach(guard => {
+                if (this.isPlayerDetected(guard, this.gameState.playerPosition)) {
+                    console.log('Detected by Guard!');
+                    this.gameState.isGameOver = true;
+                }
+            });
+        }
+
+        moveEnemy() {
+        }
+
+        getRandomEntrance() {
+            return { x: Math.floor(Math.random() * this.gridSize), y: Math.floor(Math.random() * this.gridSize) };
+        }
+
+        initGuards() {
+            let guards = [];
+            for (let i = 0; i < 3; i++) {
+                guards.push({ x: Math.floor(Math.random() * this.gridSize), y: Math.floor(Math.random() * this.gridSize) });
+            }
+            return guards;
+        }
+
+        isWithinBounds(x, y) {
+            return x >= 0 && x < this.gridSize && y >= 0 && y < this.gridSize;
+        }
+
+        isAtPosition(pos1, pos2) {
+            return pos1.x === pos2.x && pos1.y === pos2.y;
+        }
+
+        isPlayerDetected(guard, player) {
+            const distance = Math.sqrt((guard.x - player.x) ** 2 + (guard.y - player.y) ** 2);
+            return distance <= 40 / this.cellSize;
+        }
+
+        updateCardUI(cardId) {
+            document.getElementById('activePower').innerText = cardId;
+        }
         }
 
         class Game {
           constructor() {
             this.ui = new GameUI();
-            this.logic = new GameLogic('gameCanvas');
+            this.logic = new GameLogic();
             this.lastFrameTime = 0;
             this.updateInterval = 1000 / 60;
             this.done = false;
-      this.isPaused = false;
-      this.animationFrameId = null;
+            this.isPaused = false;
+            this.animationFrameId = null;
           }
           prepareGame() {
             const gameContainer = document.getElementById('game-screen');
@@ -462,31 +470,25 @@
           startGame() {
             this.ui.startGame();
             if(this.animationFrameId)
-      {
-        cancelAnimationFrame(this.animationFrameId);
-      }
-      this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this));
+            {
+                cancelAnimationFrame(this.animationFrameId);
+            }
+            this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this));
           }
           updateGame() {
           }
           resetGame() {
-      this.isPaused = false;
-      if(this.animationFrameId)
-      {
-        cancelAnimationFrame(this.animationFrameId);
-      }
+            this.isPaused = false;
+            cancelAnimationFrame(this.animationFrameId);
           }
-      pause() {
-      this.isPaused = true;
-      if(this.animationFrameId)
-      {
-        cancelAnimationFrame(this.animationFrameId);
-      }
-      }
-      resume() {
-      this.isPaused = false;
-      this.gameLoop();
-      }
+          pause() {
+            this.isPaused = true;
+            cancelAnimationFrame(this.animationFrameId);
+          }
+          resume() {
+            this.isPaused = false;
+            this.gameLoop();
+          }
           gameLoop(timestamp) {
             if (this.done) return;
             const deltaTime = timestamp - this.lastFrameTime;
@@ -495,135 +497,128 @@
               this.lastFrameTime = timestamp;
             }
             if(this.animationFrameId)
-      {
-        cancelAnimationFrame(this.animationFrameId);
-      }
-      this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this));
+            {
+                cancelAnimationFrame(this.animationFrameId);
+            }
+            this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this));
           }
           assignButtons() {
             const playButton = document.getElementById('play-button');
-      const settingsButton = document.getElementById('settings-button');
-      const instructionsButton = document.getElementById('instructions-button');
-      const playAgainButton = document.getElementById('play-again-button');
-      const mainMenuButtons = document.querySelectorAll('#game-over-main-menu-button, #settings-back-button, #instructions-back-button');
-      const gameMenuButton = document.getElementById('game-menu-button');
-      const gameRestartButton = document.getElementById('game-restart-button');
-      const gameInstructionsButton = document.getElementById('game-instructions-button');
+            const settingsButton = document.getElementById('settings-button');
+            const instructionsButton = document.getElementById('instructions-button');
+            const playAgainButton = document.getElementById('play-again-button');
+            const mainMenuButtons = document.querySelectorAll('#game-over-main-menu-button, #settings-back-button, #instructions-back-button');
+            const gameMenuButton = document.getElementById('game-menu-button');
+            const gameRestartButton = document.getElementById('game-restart-button');
+            const gameInstructionsButton = document.getElementById('game-instructions-button');
 
-      playButton.addEventListener('click', this.startGame.bind(this));
-      settingsButton.addEventListener('click', this.ui.settings.bind(this.ui));
-      instructionsButton.addEventListener('click', this.ui.instructions.bind(this.ui));
-      playAgainButton.addEventListener('click', this.startGame.bind(this));
-      mainMenuButtons.forEach(button => button.addEventListener('click', () => {
-        this.ui.mainMenu();
-      }));
-      gameMenuButton.addEventListener('click', () => {
-        this.ui.mainMenu();
-      });
-      gameRestartButton.addEventListener('click', this.startGame.bind(this));
-      gameInstructionsButton.addEventListener('click', () => {
-            this.pause();            
-            this.ui.swapToScreen(this.ui.instructionsScreen);
-            document.getElementById('instructions-back-button').addEventListener('click', () => {
-              this.ui.swapToScreen(this.ui.gameContainer);
-              this.resume();
-            }, { once: true });
-          });
+            playButton.addEventListener('click', this.startGame.bind(this));
+            settingsButton.addEventListener('click', this.ui.settings.bind(this.ui));
+            instructionsButton.addEventListener('click', this.ui.instructions.bind(this.ui));
+            playAgainButton.addEventListener('click', this.startGame.bind(this));
+            mainMenuButtons.forEach(button => button.addEventListener('click', () => {
+                this.ui.mainMenu();
+            }));
+            gameMenuButton.addEventListener('click', () => {
+                this.ui.mainMenu();
+            });
+            gameRestartButton.addEventListener('click', this.startGame.bind(this));
+            gameInstructionsButton.addEventListener('click', () => {
+                        this.pause();                      
+                        this.ui.swapToScreen(this.ui.instructionsScreen);
+                        document.getElementById('instructions-back-button').addEventListener('click', () => {
+                            this.ui.swapToScreen(this.ui.gameContainer);
+                            this.resume();
+                        }, { once: true });
+                    });
           }
         }
         const game = new Game();
         game.prepareGame();
-
-        class GameController {
-          constructor(gameLogic) {
-            this.gameLogic = gameLogic;
+      });
+      
+      class GameController {
+        constructor() {
             this.gameUI = new GameUI();
-            this.registerButtonListeners();
-            this.registerKeyboardListeners();
-            this.registerSwipeListeners();
-          }
-
-          registerButtonListeners() {
-            document.getElementById('play-button').addEventListener('click', () => {
-              this.gameUI.swapToScreen('game-screen');
-              this.gameLogic.init();
-            });
-
-            document.getElementById('restart-button').addEventListener('click', () => {
-              this.gameLogic.init();
-            });
-
-            document.getElementById('settings-button').addEventListener('click', () => {
-              this.gameUI.swapToScreen('settings-screen');
-            });
-
-            document.getElementById('instructions-button').addEventListener('click', () => {
-              this.gameUI.swapToScreen('instructions-screen');
-            });
-          }
-
-          registerKeyboardListeners() {
-            document.addEventListener('keydown', (event) => {
-              switch(event.key.toLowerCase()) {
-                case 'arrowup':
-                case 'w':
-                  this.gameLogic.movePlayer('up');
-                  break;
-                case 'arrowdown':
-                case 's':
-                  this.gameLogic.movePlayer('down');
-                  break;
-                case 'arrowleft':
-                case 'a':
-                  this.gameLogic.movePlayer('left');
-                  break;
-                case 'arrowright':
-                case 'd':
-                  this.gameLogic.movePlayer('right');
-                  break;
-              }
-            });
-          }
-
-          registerSwipeListeners() {
-            let touchStartX = 0;
-            let touchStartY = 0;
-
-            document.addEventListener('touchstart', (event) => {
-              const touch = event.touches[0];
-              touchStartX = touch.clientX;
-              touchStartY = touch.clientY;
-            });
-
-            document.addEventListener('touchend', (event) => {
-              const touch = event.changedTouches[0];
-              const touchEndX = touch.clientX;
-              const touchEndY = touch.clientY;
-
-              const deltaX = touchEndX - touchStartX;
-              const deltaY = touchEndY - touchStartY;
-
-              if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                if (deltaX > 0) {
-                  this.gameLogic.movePlayer('right');
-                } else {
-                  this.gameLogic.movePlayer('left');
-                }
-              } else {
-                if (deltaY > 0) {
-                  this.gameLogic.movePlayer('down');
-                } else {
-                  this.gameLogic.movePlayer('up');
-                }
-              }
-            });
-          }
+            this.gameLogic = new GameLogic('gameCanvas');
+            this.attachListeners();
         }
 
-        const gameLogic = new GameLogic('gameCanvas');
-        const gameController = new GameController(gameLogic);
-      });
+        attachListeners() {
+            document.addEventListener('keydown', (event) => {
+                switch (event.key) {
+                    case 'ArrowUp':
+                    case 'w':
+                        this.gameLogic.movePlayer('up');
+                        break;
+                    case 'ArrowDown':
+                    case 's':
+                        this.gameLogic.movePlayer('down');
+                        break;
+                    case 'ArrowLeft':
+                    case 'a':
+                        this.gameLogic.movePlayer('left');
+                        break;
+                    case 'ArrowRight':
+                    case 'd':
+                        this.gameLogic.movePlayer('right');
+                        break;
+                }
+            });
+
+            let touchStartX = 0, touchStartY = 0;
+            this.gameUI.canvas.addEventListener('touchstart', (event) => {
+                touchStartX = event.touches[0].clientX;
+                touchStartY = event.touches[0].clientY;
+            });
+
+            this.gameUI.canvas.addEventListener('touchend', (event) => {
+                let deltaX = event.changedTouches[0].clientX - touchStartX;
+                let deltaY = event.changedTouches[0].clientY - touchStartY;
+
+                if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                    if (deltaX > 0) this.gameLogic.movePlayer('right');
+                    else this.gameLogic.movePlayer('left');
+                } else {
+                    if (deltaY > 0) this.gameLogic.movePlayer('down');
+                    else this.gameLogic.movePlayer('up');
+                }
+            });
+
+            document.getElementById('playButton').addEventListener('click', () => this.gameUI.startGame());
+            document.getElementById('restartButton').addEventListener('click', () => this.gameUI.restartGame());
+            document.getElementById('settingsButton').addEventListener('click', () => this.gameUI.openSettings());
+            document.getElementById('instructionsButton').addEventListener('click', () => this.gameUI.showInstructions());
+        }
+    }
+
+    class GameUI {
+        constructor() {
+            this.canvas = document.getElementById('gameCanvas');
+        }
+
+        startGame() {
+            console.log('Game Started');
+        }
+
+        restartGame() {
+            console.log('Game Restarted');
+        }
+
+        openSettings() {
+            console.log('Settings');
+        }
+
+        showInstructions() {
+            console.log('Instructions');
+        }
+    }
+
+    window.onload = () => {
+        const gameController = new GameController();
+        gameController.gameLogic.init();
+    };
     </script>
   </body>
 </html>
-<!-- End Integrated HTML File -->
+<!-- End of Integrated HTML File -->

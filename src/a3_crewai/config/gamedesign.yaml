@@ -24,7 +24,7 @@ bank_heist:
 
         Guards (AI Enemies):
         - Patrol predefined routes, moving door-to-door inside the bank.
-        - Detection Radius: 40px circular area around each guard.
+        - Detection Radius: 3x3 cells range around each guard. A player can be detected if he is within this range, and game is over once detected.
         - Patrol Behavior: Move along doorways, pause briefly, reverse routes dynamically.
         - Guard States:
             - Normal: Patrols and detects the player.
@@ -70,7 +70,7 @@ bank_heist:
         - Separate SFX for:
             - Game start
             - Game over
-            - Card activation (future addition)
+            - Victory
         - The players willl have the player.png image as thumbnail and guards will have guard.png image.
 
         Game Progression:
@@ -105,13 +105,13 @@ bank_heist:
         through the exit using a hand of power cards (DASH, STEALTH, DISABLE).
     design:
         grid:
-        size: 80x80        # logical grid cells
+        size: 20x20        # logical grid cells
         cell_render: canvas  # rendered via <canvas>
         decorations:
             - subtle gridlines
             - randomized walls & doors each run
-            - vault at cell (48,48)
-            - exit at cell (0,49), locked until key obtained
+            - vault at a random cell
+            - exit at a random cell, locked until key obtained
         player:
         start: random entrance cell
         sprite: "player.png"
@@ -123,7 +123,7 @@ bank_heist:
         guards:
         count: 3 (configurable)
         patrol_route: doors-to-doors
-        detection_radius: 40px
+        detection_radius: 3x3 squared cell around the guard
         states:
             Normal: patrol & detect
             Frozen: after DISABLE card
@@ -244,10 +244,10 @@ bank_heist:
       prompt: "Futuristic card design labeled 'DISABLE' showing an electrified EMP burst disabling a camera system and alarm grid. Red glitch effects and broken neon warning symbols in background. A single vertical card sized image."
 
     - filename: "vault.png"
-      prompt: "Vault picture where the player is supposed to collect the key, futuristic and moder bank vault highlighting a key"
+      prompt: "Vault picture where the player is supposed to collect the key, futuristic and moder bank vault highlighting a key. White background, simple key like picture."
 
     - filename: "exit.png"
-      prompt: "EXit door from where the player should escape."
+      prompt: "EXit door from where the player should escape. White background simple door which is visible on screen even in a 30x30 grid."
 
   sounds:
     - filename: "bg_loop.mp3"

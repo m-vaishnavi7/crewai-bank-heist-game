@@ -1,44 +1,63 @@
 import os
-import requests
 import json
+import requests
+
+MANIFEST_PATH = "./images/manifest.json"
+OUTPUT_DIR    = "output/images"
+
+def load_assets(manifest_path):
+    """Return a list of {"filename": .., "url": ..} dicts, no matter the JSON layout."""
+    with open(manifest_path, "r") as f:
+        data = json.load(f)
+
+    # 1) Already an array of objects
+    if isinstance(data, list):
+        return data
+
+    # 2) Wrapped as { "assets": [ {...}, ... ] }
+    if isinstance(data, dict) and "assets" in data:
+        return data["assets"]
+
+    # 3) Flat mapping { "file.png": "https://..." }
+    if isinstance(data, dict):
+        return [ {"filename": k, "url": v} for k, v in data.items() ]
+
+    # Anything else is unsupported
+    raise ValueError("Unrecognised manifest format")
 
 def batch_download_image_assets():
-    images_json_path = "./images/manifest.json"  # Or wherever your manifest is
+    if not os.path.exists(MANIFEST_PATH):
+        print(f"❌ Manifest not found: {MANIFEST_PATH}")
+        return
 
-    if os.path.exists(images_json_path):
+    try:
+        assets = load_assets(MANIFEST_PATH)
+    except Exception as e:
+        print(f"❌ Failed to parse manifest: {e}")
+        return
 
-        with open(images_json_path, "r") as f:
-            manifest = json.load(f)
+    if not assets:
+        print("⚠️ Manifest is empty.")
+        return
 
-        assets = manifest.get("assets", [])
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-        if not assets:
-            print("⚠️ No assets found in the manifest!")
-            return
+    for asset in assets:
+        filename = asset.get("filename")
+        url      = asset.get("url")
 
-        os.makedirs("output/images", exist_ok=True)
+        if not filename or not url:
+            print(f"⚠️ Skipping invalid entry: {asset}")
+            continue
 
-        for asset in assets:
-            filename = asset.get("filename")
-            url = asset.get("url")
+        try:
+            r = requests.get(url, timeout=15)
+            r.raise_for_status()
+            with open(os.path.join(OUTPUT_DIR, filename), "wb") as img:
+                img.write(r.content)
+            print(f"✅ Saved {filename}")
+        except Exception as e:
+            print(f"❌ Error downloading {filename}: {e}")
 
-            if not filename or not url:
-                print(f"⚠️ Skipping invalid entry: {asset}")
-                continue
-
-            try:
-                response = requests.get(url, timeout=15)
-                if response.status_code == 200:
-                    image_path = os.path.join("output/images", filename)
-                    with open(image_path, "wb") as img_file:
-                        img_file.write(response.content)
-                    print(f"✅ Image saved: {filename}")
-                else:
-                    print(f"⚠️ Failed to download {filename}: HTTP {response.status_code}")
-            except Exception as e:
-                print(f"❌ Error downloading {filename}: {e}")
-
-    else:
-        print("❌ Manifest file not found at:", images_json_path)
-
-batch_download_image_assets()
+if __name__ == "__main__":
+    batch_download_image_assets()
